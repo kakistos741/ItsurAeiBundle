@@ -1,0 +1,12 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block body %}
+<td>
+    <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p align="center" class="advertencia">error en los datos.</p>
+    <br/>
+    <p align="center"><img src="{{ asset('bundles/itsuraei/images/error.png') }}"/></p>
+    <br/>
+    <p align="center" class="advertencia">ficha número:  <span class="titulos">{{ficha}}.</span><span align="center" class="advertencia">¡No encontrada!</span></p>
+</td>
+</table>
+{% endblock %}

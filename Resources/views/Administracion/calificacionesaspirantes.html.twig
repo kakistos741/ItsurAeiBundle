@@ -1,0 +1,61 @@
+{% extends 'ItsurAeiBundle::adminlayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <p class="titulosNegro" align="center">Reporte de Calificaciones</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+     <br/>
+     <br/>
+     <table align="center" border=1>
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Nombre</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Fecha aplicación</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Calificación</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro">Selección </p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro"> Diagnóstico </p>
+         </th>
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.ficha}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.nombre}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.fecha.format('d-m-Y')}}</p>
+                </td>
+                 <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificacion}} </p>
+                </td>
+                 <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificacionseleccion}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificaciondiagnostico}} </p>
+                </td>
+
+    {% else %}
+        <tr>
+            <p align="center" class="advertencia">¡No se encontrarón aspirantes!.</p>
+        </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}

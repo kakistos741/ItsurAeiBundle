@@ -1,0 +1,73 @@
+{% extends 'ItsurAeiBundle::adminlayout.html.twig' %}
+{% block body %}
+    <p class="titulosNegro" align="center">Reporte de Temas de Aspirante</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <br/>
+    <br/>
+    <table align="center" border='0'>
+    <tr>
+        <td align="left" class="encabezadosNegro"> Ficha:</td>
+        <td align="left" class="datosNegro"> {{aspirante.ficha}}</td>
+        <td align="left" class="encabezadosNegro"> Escuela de procedencia:</td>
+        <td align="left" class="datosNegro">{{aspirante.escuelaprocedencia}}</td>
+    </tr>
+    <tr>
+        <td align="left" class="encabezadosNegro"> Nombre:</td>
+        <td align="left" class="datosNegro"> {{aspirante.nombre}}</td>
+        <td align="left" class="encabezadosNegro"> Bachillerato:</td>
+        <td align="left" class="datosNegro"> {{aspirante.bachillerato}}</td>
+    </tr>
+    <tr>
+        <td align="left" class="encabezadosNegro"> Carrera:</td>
+        <td align="left" class="datosNegro"> {{aspirante.carrera}}</td>
+        <td align="left" class="encabezadosNegro"> Promedio de Bachillerato:</td>
+        <td align="center" class="datosNegro"> {{aspirante.promediobachillerato}}</td>
+    </tr>
+    <tr>
+        <td align="left" class="encabezadosNegro">Lugar de origen: </td>
+        <td align="left" class="datosNegro">{{aspirante.lugarOrigen}}</td>
+        <td align="left" class="encabezadosNegro"> Calificacion:</td>
+        <td align="center" class="datosNegro" bgcolor="#E9EBE9"> {{aspirante.hoja.calificacion}}</td>
+    </tr>
+    <tr>
+        <td align="left" class="encabezadosNegro"> Fecha de nacimiento:</td>
+        <td align="left" class="datosNegro"> {{aspirante.fechanacimiento.format('d-m-Y')}}</td>
+        <td align="left" class="encabezadosNegro"> Calificacion Selección:</td>
+        <td align="center" class="datosNegro" bgcolor="#E9EBE9"> {{aspirante.hoja.calificacionSeleccion}}</td>
+    </tr>
+    <tr>
+        <td align="left" class="encabezadosNegro"> Fecha de aplicación:</td>
+        <td align="left" class="datosNegro"> {{aspirante.hoja.fecha.format('d-m-Y')}}</td>
+        <td align="left" class="encabezadosNegro"> Calificacion Diagnostico:</td>
+        <td align="center" class="datosNegro"  bgcolor="#E9EBE9"> {{aspirante.hoja.calificacionDiagnostico}}</td>
+    </tr>
+    </table>
+    <br/>
+    <br/>
+     <table align="center" border='1' bordercolor="#D6D8D6">
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">área</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Calificación</p>
+         </th>
+         {% for area in aspirante.hoja.areas %}
+         {% for seccion in area.secciones %}
+             {% for tema in seccion.temas %}
+                 <tr>
+                    <td bgcolor="#E9EBE9">
+                          <p align="left" class="datosNegro">{{tema.tema.nombre}}</p>
+                    </td>
+                    <td>
+                          <p align="center" class="datosNegro">{{tema.calificacion}}</p>
+                    </td>
+                  </tr>
+              {% endfor %}
+         {% endfor %}
+         {% endfor %}
+    </table>
+
+
+{% endblock %}

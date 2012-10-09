@@ -1,0 +1,46 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluaci&oacute;n
+{% endblock %}
+{% block body %}
+    <tr>
+        <td>
+        <center>
+        <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+        <img src="{{ asset('bundles/itsuraei/images/admision2.jpg') }}"/>
+        <br/>
+        <br/>
+        </center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <table align="center" border="1" bordercolor="#006600">
+        <tr>
+         <td>
+         <p align="center" class="advertencia">
+           Políticas y directrices
+         </p>
+          <ul>
+              <li class="instrucciones" type="square">Se permite el uso de calculadora.</li>
+              <li class="instrucciones" type="square">Pedir hojas recicladas en caso de ser necesario.</li>
+              <li class="instrucciones" type="square">No se permite comer, ni tomar líquidos.</li>
+              <li class="instrucciones" type="square">Apagar sus celulares.</li>
+              <li class="instrucciones" type="square">Permanecer en silencio durante la aplicación del examen y evitar voltear a ver la pantalla del compañero.</li>
+              <li class="instrucciones" type="square">Al término del examen revisar su lugar para asegurarse de no dejar ninguna pertenencia.</li>
+           </ul>
+          </td>
+          </tr>
+        </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+        <br/>
+        <br/>
+            <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
+               Aceptar
+            </a>
+        </td>
+    </tr>
+{% endblock %}

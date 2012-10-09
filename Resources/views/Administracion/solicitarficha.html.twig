@@ -1,0 +1,25 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block body %}
+<td>
+    <p align="center" class="titulos">Reporte de Aspirante</p>
+    <br/>
+    <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p align="center" class="preguntas"> Número de ficha del aspirante.</p>
+    <center>
+    <br/>
+    {% if reporte==1 %}
+       <form action="{{ path('admin_areas_aspirante') }}" method="post" {{ form_enctype(form) }}>
+    {% endif  %}
+    
+    {% if reporte==2 %}
+       <form action="{{ path('admin_temas_aspirante') }}" method="post" {{ form_enctype(form) }}>
+    {% endif  %}
+
+        {{ form_widget(form) }}
+        <br/>
+        <input type="submit" class="button verde"/>
+    </form>
+    </center>
+</td>
+</table>
+{% endblock %}

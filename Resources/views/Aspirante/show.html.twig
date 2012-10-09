@@ -1,0 +1,24 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Periodo
+{% endblock %}
+
+{% block body %}
+    Ficha: {{aspirante.ficha}}
+    <br/>
+    Nombre: {{aspirante.nombre}}
+    <br/>
+    Carrera: {{aspirante.carrera}}
+    <br/>
+    Lugar de Origen: {{aspirante.lugarOrigen}}
+    <br/>
+    Escuela de Procedencia: {{aspirante.escuelaProcedencia}}
+    <br/>
+    Bachillerato: {{aspirante.bachillerato}}
+    <br/>
+    Genero: {{aspirante.genero}}
+    <br/>
+    {{aspirante.fechaNacimiento.format('d-m-Y')}}
+    Promedio Bachillerato: {{aspirante.promedioBachillerato}}
+
+{% endblock %}

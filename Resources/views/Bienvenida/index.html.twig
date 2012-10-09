@@ -1,0 +1,27 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Bienvenido
+{% endblock %}
+
+{% block body %}
+    <tr>
+        <td>
+            <center>
+            <p align="center" class="titulos">sistema de evaluaci&oacute;n de nuevo ingreso ITSUR</p>
+            <br/>
+            <article>
+            <img src="{{ asset('bundles/itsuraei/images/evaluacion.png') }}"/><a href="{{ path('evaluacion_index') }}" class="button verde">
+                    Evaluaci&oacute;n de Ingreso.
+                 </a>
+            </article>
+            <br/>
+            <br/>
+            <article>
+            <img src="{{ asset('bundles/itsuraei/images/reporte.png') }}"/><a href="{{ path('admin_index') }}" class="button verde" >
+                     Secci&oacute;n de administraci&oacute;n
+                 </a>
+            </article>
+            </center>
+        </td>
+    </tr>
+{% endblock %}

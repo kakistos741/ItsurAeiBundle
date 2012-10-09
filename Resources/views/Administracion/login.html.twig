@@ -1,0 +1,36 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Administración
+{% endblock %}
+
+{% block body %}
+    <td>
+    <center>
+    <p class="titulos">Registrarse</p>
+    <p class="preguntas">
+        Escribe tu nombre de usuario y contraseña.
+    </p>
+
+    {% if error %}
+        <div class="error">{{ error.message }}</div>
+    {% endif %}
+
+    <form action="{{ path("admin_security_check") }}" method="post" id="login">
+        <div>
+            <label for="username">Usuario</label>
+            <input type="text" id="username" name="_username"/>
+        </div>
+
+        <div>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="_password" />
+        </div>
+
+        <input type="submit" class="button verde" value="aceptar" />
+    </form>
+    </center>
+    </td>
+    </table>
+{% endblock %}
+
+{% set code = code(_self) %}

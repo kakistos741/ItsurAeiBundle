@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link href="{{ asset('bundles/itsuraei/css/fuente.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/itsuraei/css/boton.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/itsuraei/css/style.css') }}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <table>
+          <td>
+            <table width="800" border="0" align="left">
+           {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Física' %}
+                 <td><img src="{{ asset('bundles/itsuraei/images/Fisics.png') }}"/></td>
+           {% else %}
+                 {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Administración y Contabilidad' %}
+                     <td><img src="{{ asset('bundles/itsuraei/images/Manage.png') }}"/></td>
+                 {% else %}
+                      {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Matemáticas' %}
+                          <td><img src="{{ asset('bundles/itsuraei/images/Math.png') }}"/></td>
+                      {% else %}
+                           {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Química' %}
+                               <td><img src="{{ asset('bundles/itsuraei/images/Chemist1.png') }}"/></td>
+                           {% else %}
+                                  {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Informática' %}
+                                       <td><img src="{{ asset('bundles/itsuraei/images/Informatic.png') }}"/></td>
+                                  {% else %}
+                                       {% if grupoPreguntas.grupo.tema.seccion.area.nombre =='Inglés' %}
+                                            <td><img src="{{ asset('bundles/itsuraei/images/English.png') }}"/></td>
+                                       {% else %}
+                                            <td><img src="{{ asset('bundles/itsuraei/images/Reading.png') }}"/></td>
+                                       {% endif %}
+                                  {% endif %}
+                           {% endif %}
+                      {% endif %}
+                 {% endif %}
+           {% endif %}
+          <td><img src="{{ asset('bundles/itsuraei/images/Menu/blanco.jpg') }}"/></td>
+          {% for area in hoja.areas %}
+          {% if area.area.nombre=='Física' %}
+             {% if area.contestada %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/FisicaCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Fisica.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+           {% if area.area.nombre=='Administración y Contabilidad' %}
+             {% if area.contestada %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/AdministracionCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Administracion.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+           {% if area.area.nombre=='Matemáticas' %}
+             {% if area.contestada %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/MatematicasCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Matematicas.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+          {% if area.area.nombre=='Química' %}
+             {% if area.contestada %}
+                    <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/QuimicaCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Quimica.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+          {% if area.area.nombre=='Informática' %}
+             {% if area.contestada %}
+                    <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/InformaticaCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Informatica.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+          {% if area.area.nombre=='Inglés' %}
+             {% if area.contestada %}
+             <td>
+                  <img src="{{ asset('bundles/itsuraei/images/Menu/InglesCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Ingles.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          
+          {% if area.area.nombre=='Metodología y Taller de Lectura' %}
+             {% if area.contestada %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/LecturaCompacto.jpg') }}"/>
+                  </td>
+             {% else %}
+                  <td>
+                   <img src="{{ asset('bundles/itsuraei/images/Menu/Lectura.jpg') }}"/>
+                  </td>
+             {% endif %}
+          {% endif %}
+          {% endfor %}
+
+          </td>
+         </table>
+         {% block body %}{% endblock %}
+         {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Nuevo Periodo
+{% endblock %}
+
+{% block body %}
+    <tr>
+        <td>
+    <form action="{{ path('aspirante_new') }}" method="post" {{ form_enctype(form) }}>
+       {{ form_widget(form) }}
+
+       <input type="submit" />
+    </form>
+        </td>
+    </tr>
+{% endblock %}

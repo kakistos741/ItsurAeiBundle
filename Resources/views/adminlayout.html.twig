@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link href="{{ asset('bundles/itsuraei/css/fuente.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('bundles/itsuraei/css/boton.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/JavaScript">  </script>
+    </head>
+    <body>
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+    </body>
+</html>

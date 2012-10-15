@@ -11,7 +11,7 @@ use Itsur\AeiBundle\Entity\Aspirante;
 use Itsur\AeiBundle\Form\AspiranteType;
 
 /**
- * @Route("/admin/aspirante")
+ * @Route("/admin/aspirantes")
  */
 class AspiranteController extends Controller
 {
@@ -82,7 +82,7 @@ class AspiranteController extends Controller
     }
 
     /**
-     * @Route("/show/{ficha}", name="aspirante_show")
+     * @Route("/{ficha}/show/", name="aspirante_show")
      * @Template()
      */
     public function showAction($ficha)
@@ -94,23 +94,47 @@ class AspiranteController extends Controller
         if(!$aspirante){
             throw $this->createNotFoundException('No se encontró el aspirante con la ficha '.$ficha);
         }
-         return $this->render('ItsurAeiBundle:Aspirante:show.html.twig',array(
+        return $this->render('ItsurAeiBundle:Aspirante:show.html.twig',array(
         'aspirante'=> $aspirante,
         ));
     }
 
     /**
-     * @Route("/list", name="aspirante_list")
+     * @Route("/list", defaults={"carrera"="TODAS", "order"="asc"}),
+     * @Route("/list/{carrera}/{order}", name="aspirante_list")
      * @Template()
      */
-    public function listAction()
+    public function listAction($carrera, $order)
     {
-        $periodo = $this->container->getParameter('periodo.actual');
-        $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo');
+        $periodoActual = $this->container->getParameter('periodo.actual');
+        $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante');
 
-        $periodos =  $repository->findAll();
+        if($order == "asc"){
+           if($carrera == "TODAS"){
+               $aspirantes =  $repository->findAllOrderedNameByPeriodo($periodoActual);
+           }else{
+               $aspirantes = $repository->findAllOrderedNameByPeriodoAndCarrera($periodoActual, $carrera);
+           }  
+        }elseif($order == "desc"){
+           if($carrera == "TODAS"){
+               $aspirantes =  $repository->findAllOrderedNameDescByPeriodo($periodoActual);
+           }else{
+               $aspirantes = $repository->findAllOrderedNameDescByPeriodoAndCarrera($periodoActual, $carrera);
+           }  
+        }else{
+           if($carrera == "TODAS"){
+               $aspirantes =  $repository->findAllByPeriodo($periodoActual);
+           }else{
+               $aspirantes =  $repository->findAllByPeriodoAndCarrera($periodoActual, $carrera);
+           }    
+        }
 
-        return new Response($periodo.'Aspirantes '. $periodos);
+        return $this->render('ItsurAeiBundle:Aspirante:list.html.twig',array(
+        'aspirantes'=> $aspirantes,
+        'noAspirantes'=>count($aspirantes),
+        'carrera'=>$carrera,
+        ));
+
     }
     
     /**
@@ -122,8 +146,79 @@ class AspiranteController extends Controller
 
         return new Response('Sucess');
     }
+
+    /**
+     * @Route("/{ficha}/areas", name="aspirante_areas")
+     * @Template()
+     */
+    public function areasAspiranteAction($ficha, Request $request)
+    {
+        $id = $this->container->getParameter('periodo.actual');
+
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
+        ->find($id);
+
+        $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
+            ->findByPeriodoAndFichaWithHoja($periodo->getId(), $ficha);
+
+        if($aspirante)
+        {
+            return $this->render('ItsurAeiBundle:Aspirante:areasaspirante.html.twig',
+            array('aspirante'=> $aspirante,
+               'periodo'=>$periodo,
+            ));
+        }else{
+                return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
+                    array('ficha'=> $ficha,
+                         'periodo'=>$periodo,
+                    ));
+        }
+
+        return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
+        array(
+            'form'=> $form->createView(),
+            'periodo'=>$periodo,
+            'reporte'=>1,
+        ));
+    }
     
-    
+     /**
+     * @Route("/{ficha}/temas", name="aspirante_temas")
+     * @Template()
+     */
+    public function temasAspiranteAction($ficha, Request $request)
+    {
+        $id = $this->container->getParameter('periodo.actual');
+
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
+        ->find($id);
+
+            //$periodo = $this->container->getParameter('periodo.actual');
+            $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
+            ->findByPeriodoAndFichaWithHoja($periodo->getId(), $ficha);
+
+            if($aspirante)
+            {
+                  return $this->render('ItsurAeiBundle:Aspirante:temasaspirante.html.twig',
+                    array('aspirante'=> $aspirante,
+                         'periodo'=>$periodo,
+                    ));
+            }else
+            {
+                return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
+                    array('ficha'=> $ficha,
+                         'periodo'=>$periodo,
+                    ));
+            }
+
+
+        return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
+        array(
+            'form'=> $form->createView(),
+            'periodo'=>$periodo,
+            'reporte'=>2,
+        ));
+    }
 }
 
 

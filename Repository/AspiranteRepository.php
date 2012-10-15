@@ -13,8 +13,9 @@ use Doctrine\ORM\EntityRepository;
 class AspiranteRepository extends EntityRepository
 {
 
-    public function findByPeriodoAndFicha($periodo, $ficha){
-         $query = $this->getEntityManager()
+    public function findByPeriodoAndFicha($periodo, $ficha)
+    {
+        $query = $this->getEntityManager()
         ->createQuery('
             SELECT a, p FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
@@ -28,7 +29,8 @@ class AspiranteRepository extends EntityRepository
         }
     }
     
-     public function findByPeriodoAndFichaWithHoja($periodo, $ficha){
+     public function findByPeriodoAndFichaWithHoja($periodo, $ficha)
+     {       
          $query = $this->getEntityManager()
         ->createQuery('
             SELECT a, p, h FROM ItsurAeiBundle:Aspirante a
@@ -44,7 +46,9 @@ class AspiranteRepository extends EntityRepository
         }
     }
     
-    public function findByPeriodoAndNombre($periodo, $nombre){
+    public function findByPeriodoAndNombre($periodo, $nombre)
+    {
+
          $query = $this->getEntityManager()
         ->createQuery("
             SELECT a, p FROM ItsurAeiBundle:Aspirante a
@@ -60,24 +64,121 @@ class AspiranteRepository extends EntityRepository
 
     }
     
-     public function findAllByPeriodo($periodo){
-         $query = $this->getEntityManager()
+     public function findAllByPeriodo($periodo)
+     {
+
+        $query = $this->getEntityManager()
         ->createQuery("
             SELECT a, p FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
             WHERE  p.id = :periodo
             ORDER BY a.ficha ASC"
         )->setParameter('periodo', $periodo);
+       try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function findAllOrderedNameByPeriodo($periodo)
+     {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+            ORDER BY a.nombre ASC"
+        )->setParameter('periodo', $periodo);
+       try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function findAllOrderedNameDescByPeriodo($periodo)
+     {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+            ORDER BY a.nombre DESC"
+        )->setParameter('periodo', $periodo);
+       try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function findAllByPeriodoAndCarrera($periodo, $carrera)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+               AND a.carrera = :carrera
+            ORDER BY a.ficha ASC"
+        )->setParameter('periodo', $periodo)
+         ->setParameter('carrera', $carrera);
         try {
             return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
+    }
 
+
+    public function findAllOrderedNameByPeriodoAndCarrera($periodo, $carrera)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+               AND a.carrera = :carrera
+            ORDER BY a.nombre ASC"
+        )->setParameter('periodo', $periodo)
+         ->setParameter('carrera', $carrera);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
     
-    public function findAllByPeriodoWithHoja($periodo){
-         $query = $this->getEntityManager()
+
+    public function findAllOrderedNameDescByPeriodoAndCarrera($periodo, $carrera)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+               AND a.carrera = :carrera
+            ORDER BY a.nombre DESC"
+        )->setParameter('periodo', $periodo)
+         ->setParameter('carrera', $carrera);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    public function findAllByPeriodoWithHoja($periodo)
+    {
+
+        $query = $this->getEntityManager()
         ->createQuery("
             SELECT a, p, h FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
@@ -90,6 +191,5 @@ class AspiranteRepository extends EntityRepository
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-
     }
 }

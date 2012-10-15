@@ -1,6 +1,6 @@
 {% extends 'ItsurAeiBundle::layout.html.twig' %}
 {% block title %}
-    Mostrar Periodo
+    Mostrar Aspirante
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,8 @@
     <br/>
     Genero: {{aspirante.genero}}
     <br/>
-    {{aspirante.fechaNacimiento.format('d-m-Y')}}
+    Fecha de Nacimiento: {{aspirante.fechaNacimiento.format('d-m-Y')}}
+    <br/>
     Promedio Bachillerato: {{aspirante.promedioBachillerato}}
 
 {% endblock %}

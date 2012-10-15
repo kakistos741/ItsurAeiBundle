@@ -1,0 +1,54 @@
+
+{% block title %}
+    Aspirantes
+{% endblock %}
+
+{% block body %}
+
+Carrera: {{carrera}}
+ <h2>Lista de Aspirantes</h2>
+    <br/>
+    <nav>
+     <strong>Carreras: </strong>
+     <a href="{{path('aspirante_list',{'carrera':'TODAS','order':'uor'} ) }}">Todas</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING.INDUSTRIAL', 'order':'uor'} ) }}">Industrial</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING. SISTEMAS','order':'uor'} ) }}">Sistemas</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING.GESTION', 'order':'uor'} ) }}">Gestion</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING.ELECTRONICA', 'order':'uor'} ) }}">Electronica</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING.INFORMATICA', 'order':'uor'} ) }}">Informatica</a> | 
+     <a href="{{path('aspirante_list',{'carrera':'ING.AMBIENTAL', 'order':'uor'} ) }}">Ambiental</a>
+     </nav>
+    <br/>
+    <br/>
+    <table border="1">
+        <tr>
+            <th>Ficha</th>
+            <th>Nombre  |<a href="{{path('aspirante_list',{'carrera':carrera, 'order':'asc' } ) }}">Asc</a>|<a href="{{path('aspirante_list',{'carrera':carrera, 'order':'desc' } ) }}">Desc</a>|</th>
+            <th>Carrera</th>
+            <th>Bachillerato</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Genero</th>
+            <th>Reportes</th>
+        </tr>
+        {% for aspirante in aspirantes %}
+            <tr>
+                <td>{{aspirante.ficha}}</td>
+                <td>{{aspirante.nombre}}</td>
+                <td>{{aspirante.carrera}}</td>
+                <td>{{aspirante.bachillerato}}</td>
+                <td>{{aspirante.fechanacimiento.format('d-m-Y')}}</td>
+                <td>{{aspirante.genero}}</td>
+                <td>
+                   {% if aspirante.hoja %}
+                      <a href="{{path('aspirante_areas',{'ficha':aspirante.ficha} ) }}">A</a>
+                      |
+                      <a href="{{path('aspirante_temas',{'ficha':aspirante.ficha} ) }}">T</a>
+                      |
+                   {% endif %}
+                   <a href="{{path('aspirante_show',{'ficha':aspirante.ficha} ) }}">I</a>
+                </td>
+            </tr>
+        {% endfor %}
+		    <tr>Numero de aspirantes {{noAspirantes}} </tr>
+    </table>
+{% endblock %}

@@ -17,3 +17,7 @@ _aei_admin_periodo:
 _aei_admin_aspirante:
     resource: "@ItsurAeiBundle/Controller/AspiranteController.php"
     type:     annotation
+
+_aei_admin_estadisticos:
+    resource: "@ItsurAeiBundle/Controller/EstadisticosController.php"
+    type:     annotation

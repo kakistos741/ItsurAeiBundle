@@ -9,7 +9,7 @@ use Itsur\AeiBundle\Entity\Area;
  * Itsur\AeiBundle\Entity\Manual
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Itsur\AeiBundle\Repository\ManualRepository")
  */
 class Manual
 {
@@ -203,3 +203,5 @@ class Manual
         return $this->areas;
     }
 }
+
+?>

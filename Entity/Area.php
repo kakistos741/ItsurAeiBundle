@@ -5,7 +5,6 @@ namespace Itsur\AeiBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Itsur\AeiBundle\Entity\Manual;
 use Itsur\AeiBundle\Entity\Seccion;
-
 /**
  * Itsur\AeiBundle\Entity\Area
  *

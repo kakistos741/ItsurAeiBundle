@@ -1,0 +1,42 @@
+{% block title %}
+    Estadisticos
+{% endblock %}
+
+{% block body %}
+    <br/>
+    {{ periodo.anio}}  {{ periodo.semestre}} 
+    <br/>
+    <br/>
+    <table border="1">
+    <tr>
+        <th>Escuela</th>
+        <th>Cantidad</th>
+    </tr>
+
+       {% for dato in datos %}
+            <tr>
+           {% for datox in dato %}
+             <td>{{datox}}</td>
+           {% endfor %}
+           </tr>
+       {% endfor %}
+    <br/>
+  <br/>
+  Total aspirantes: {{total}}
+		<nav>
+     <strong>Carreras: </strong>
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING.INDUSTRIAL'} ) }}">Industrial</a> 
+     | 
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING. SISTEMAS'} ) }}">Sistemas</a> 
+     | 
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING.GESTION'} ) }}">Gestion</a> 
+     | 
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING.ELECTRONICA'} ) }}">Electronica</a> 
+     | 
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING.INFORMATICA'} ) }}">Informatica</a> 
+     | 
+     <a href="{{path('estadisticos_escuelaprocedencia_carrera',{'carrera':'ING.AMBIENTAL'} ) }}">Ambiental</a>
+     </nav>
+
+	<br/>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace Itsur\AeiBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * AspiranteRepository
@@ -30,8 +31,8 @@ class AspiranteRepository extends EntityRepository
     }
     
      public function findByPeriodoAndFichaWithHoja($periodo, $ficha)
-     {       
-         $query = $this->getEntityManager()
+     {   
+        $query = $this->getEntityManager()
         ->createQuery('
             SELECT a, p, h FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
@@ -49,7 +50,8 @@ class AspiranteRepository extends EntityRepository
     public function findByPeriodoAndNombre($periodo, $nombre)
     {
 
-         $query = $this->getEntityManager()
+
+        $query = $this->getEntityManager()
         ->createQuery("
             SELECT a, p FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
@@ -61,9 +63,8 @@ class AspiranteRepository extends EntityRepository
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-
     }
-    
+
      public function findAllByPeriodo($periodo)
      {
 
@@ -192,4 +193,41 @@ class AspiranteRepository extends EntityRepository
             return null;
         }
     }
+
+    public function count($periodo)
+    {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT  COUNT(a.ficha) FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo"
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    public function countByCarrera($periodo, $carrera)
+    {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT  COUNT(a.ficha) FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            WHERE  p.id = :periodo
+                AND a.carrera = :carrera"
+        )
+        ->setParameter('carrera', $carrera)
+        ->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 }

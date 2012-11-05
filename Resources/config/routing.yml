@@ -19,5 +19,13 @@ _aei_admin_aspirante:
     type:     annotation
 
 _aei_admin_estadisticos:
-    resource: "@ItsurAeiBundle/Controller/EstadisticosController.php"
+    resource: "@ItsurAeiBundle/Controller/EstadisticosPreEvaluacionController.php"
+    type:     annotation
+
+_aei_admin_manual:
+    resource: "@ItsurAeiBundle/Controller/ManualController.php"
+    type:     annotation
+
+_aei_admin_area:
+    resource: "@ItsurAeiBundle/Controller/AreaController.php"
     type:     annotation

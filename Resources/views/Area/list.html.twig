@@ -1,0 +1,32 @@
+
+{% block title %}
+    Manual
+{% endblock %}
+
+{% block body %}
+    <h1><Lista de Manuales/h1>
+    <table border="1">
+        <tr>
+            <th>Clave</th>
+            <th>Nombre</th>
+            <th>Puntaje Total</th>
+            <th>Puntaje Seleccion</th>
+            <th>Puntaje Diagnostico</th>
+            <th>Tiempo</th>
+            <th>Link</th>
+        </tr>
+        {% for area in areas %}
+            <tr>
+                <td>{{area.id}}</td>
+                <td>{{area.nombre}}</td>
+                <td>{{area.puntaje}}</td>
+                <td>{{area.puntajeSeleccion}}</td>
+                <td>{{area.puntajeDiagnostico}}</td>
+                <td>{{area.tiempo}}</td>
+                {#<td> <a href="{{path('seccion_list',{'area':area.id} ) }}">A</a> </td>#}
+            </tr>
+        {% endfor %}
+            <tr>Numero de areas {{noAreas}} </tr>
+    </table>
+
+{% endblock %}

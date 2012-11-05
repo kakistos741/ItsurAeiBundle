@@ -1,0 +1,38 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Manual
+{% endblock %}
+
+{% block body %}
+   <h1>Información del Manual</h1> 
+    <br/>
+    Clave: {{manual.clave}}
+    <br/>
+    Nombre: {{manual.nombre}}
+    <br/>
+    Puntaje Total: {{manual.puntaje}}
+    <br/>
+    Puntaje de Selección: {{manual.puntajeSeleccion}}
+    <br/>
+    Puntaje de Diagnostico: {{manual.puntajeDiagnostico}}
+    <br/>
+    <br/>
+    Areas
+    <br/>
+    <br/>
+    {% for area in manual.areas %}
+        Area: {{area.nombre}}
+        <br/>
+        {% for seccion in area.secciones %}
+           Sección: {{seccion.nombre}}
+           <br/>
+           {% for tema in seccion.temas %}
+                Tema: {{tema.nombre}}
+                <br/>
+            {% endfor %}
+
+        {% endfor %}
+        <br/>
+    {% endfor %}
+
+{% endblock %}

@@ -25,19 +25,17 @@ class PeriodoController extends Controller
     public function newAction(Request $request)
     {
         $periodo = new Periodo();
-        $periodo->setSemestre('Enero - Junio');
-        $periodo->setAnio('2012');
-
-        $form = $this->createForm(new PeriodoType(), $periodo);
+       
+        $form = $this->createForm(new PeriodoType(),$periodo);
             
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($periodo );
+                $em->persist($periodo);
                 $em->flush();
-                return $this->redirect($this->generateUrl('periodo_sucess'));
+                return $this->redirect($this->generateUrl('periodo/list'));
             }
             
         }
@@ -80,7 +78,7 @@ class PeriodoController extends Controller
 
         $periodos =  $repository->findAll();
 
-        return new Response($periodo.'Periodo semestre '. $periodos);
+        return $this->render('ItsurAeiBundle:Periodo:list.html.twig',array('periodos'=>$periodos));
     }
 
     /**
@@ -131,14 +129,6 @@ class PeriodoController extends Controller
     }
     
 }
-
-
-
-
-
-
-
-
 
 
 

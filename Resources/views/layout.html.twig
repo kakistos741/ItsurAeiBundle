@@ -5,8 +5,6 @@
         <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        <link href="{{ asset('bundles/itsuraei/css/fuente.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('bundles/itsuraei/css/boton.css') }}" rel="stylesheet" type="text/css" />
         <script type="text/JavaScript">
         <!--
         function aMayusculas(obj,id){
@@ -17,12 +15,8 @@
         </script>
     </head>
     <body>
-        <table width="960" height="380" border="0" align="center">
-            <tr>
-                <td><img src="{{ asset('bundles/itsuraei/images/encabezado.jpg') }}" width="952" height="200" /></td>
-            </tr>
             {% block body %}{% endblock %}
             {% block javascripts %}{% endblock %}
-        </table>
+   
     </body>
 </html>

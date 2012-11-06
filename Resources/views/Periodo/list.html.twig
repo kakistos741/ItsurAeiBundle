@@ -1,0 +1,41 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Listado de periodos
+{% endblock %}
+
+{% block body %}
+     
+	 <a href="{{ path('periodo_new') }}" >Nuevo periodo</a>
+    
+	<table border="1">
+		<tr>
+		<th>Periodo</th>
+		<th>Año</th>
+		<th>Accion</th>
+		</tr>
+		
+		
+	{% for periodos in periodos %}
+	       <tr>
+            <td>	
+			{{periodos.semestre}} 
+			</td>
+			<td>
+			{{periodos.anio}}
+			</td>
+			<td>
+			<a href="{{ path('periodo_update',{ 'id':periodos.id } ) }}" >Modificar</a>
+			
+			</td>
+	     </tr>
+	 {% else %}
+         <tr>
+            <td colspan="2">
+             No se encontraron periodos.
+	  		</td>
+	     </tr>
+     {% endfor %}
+
+	<table>
+
+{% endblock %}

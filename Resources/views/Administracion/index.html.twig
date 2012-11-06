@@ -5,42 +5,32 @@
 
 {%block body %}
 
-      <td>
-      <table align="center">
-      <td colspan="2">
+     
+ 
       <p align="center" class="titulos"> Bienvenido a la sección de administración</p>
-      </td>
-      <tr>
-        <td>
-            <img src="{{ asset('bundles/itsuraei/images/alumnos.gif') }}"/>
-            <a href="{{ path('admin_listado_aspirantes') }}" class="button verde">
+   
+            <a href="{{ path('periodo_list') }}" class="button verde">
+               Periodos
+            </a><br />
+			
+			<a href="{{ path('admin_listado_aspirantes') }}" class="button verde">
                 Listado de Aspirantes
-            </a>
-         </td>
-         <td>
-             <img src="{{ asset('bundles/itsuraei/images/calificacionesAsp.png') }}"/>
+            </a><br />
+       
+           
              <a href="{{ path('admin_calificaciones_aspirantes') }}" class="button verde">
                  Calificaciones de Aspirantes
-             </a>
-         </td>
-         </tr>
-         <tr>
-         <td>
-             <img src="{{ asset('bundles/itsuraei/images/areas.png') }}"/>
+             </a><br />
+        
              <a href="{{ path('admin_areas_aspirante') }}" class="button verde">
                  Calificaciones por Areas
-             </a>
-         </td>
-         <td>
-             <img src="{{ asset('bundles/itsuraei/images/science.jpg') }}"/>
+             </a><br />
+       
+           
              <a href="{{ path('admin_temas_aspirante') }}" class="button verde">
                  Calificaciones por Temas
-             </a>
-         </td>
-         </tr>
-      </table>
-      </td>
-</table>
-
+             </a><br />
+ 			
+			
 
 {% endblock %}

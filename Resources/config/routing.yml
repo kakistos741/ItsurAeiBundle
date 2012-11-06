@@ -18,8 +18,12 @@ _aei_admin_aspirante:
     resource: "@ItsurAeiBundle/Controller/AspiranteController.php"
     type:     annotation
 
-_aei_admin_estadisticos:
+_aei_admin_estadisticos_previos:
     resource: "@ItsurAeiBundle/Controller/EstadisticosPreEvaluacionController.php"
+    type:     annotation
+
+_aei_admin_estadisticos_posteriores:
+    resource: "@ItsurAeiBundle/Controller/EstadisticosPostEvaluacionController.php"
     type:     annotation
 
 _aei_admin_manual:

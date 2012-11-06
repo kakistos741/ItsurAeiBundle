@@ -210,14 +210,32 @@ class AspiranteRepository extends EntityRepository
         }
     }
 
-
-    public function countByCarrera($periodo, $carrera)
+    public function countWithHoja($periodo)
     {
 
         $query = $this->getEntityManager()
         ->createQuery("
             SELECT  COUNT(a.ficha) FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo"
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+
+    public function countByCarreraWithHoja($periodo, $carrera)
+    {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT  COUNT(a.ficha) FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
                 AND a.carrera = :carrera"
         )

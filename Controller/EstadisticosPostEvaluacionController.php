@@ -10,13 +10,13 @@ use Leg\GoogleChartsBundle\Charts\Gallery\PieChart;
 use Leg\GoogleChartsBundle\Charts\Gallery\Pie\ThreeDimensionsChart;
 
 /**
-* @Route("/admin/pre/esta")
+* @Route("/admin/post/esta")
 */
-class EstadisticosPreEvaluacionController extends Controller
+class EstadisticosPostEvaluacionController extends Controller
 {
 
     /**
-     * @Route("/index", name="pre_estadisticos_index")
+     * @Route("/index", name="post_estadisticos_index")
      * @Template()
      */
     public function indexAction()
@@ -28,29 +28,29 @@ class EstadisticosPreEvaluacionController extends Controller
         return array();
     }
 
-        /**
-     * @Route("/listado", name="listado_aspirantes")
+    /**
+     * @Route("/listadocalificaciones", name="calificaciones_aspirantes")
      * @Template()
      */
-    public function listadoAspirantesAction()
+    public function calificacionesAspirantesAction()
     {
         $id = $this->container->getParameter('periodo.actual');
-        
+
         $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
         ->find($id);
-        
-        $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-        ->findAllByPeriodo($periodo->getId());
 
-        return $this->render('ItsurAeiBundle:Administracion:listadoaspirantes.html.twig', array(
+        $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
+        ->findAllByPeriodoWithHoja($periodo->getId());
+
+        return array(
             'aspirantes'=> $aspirantes,
             'periodo'=>$periodo,
-        ));
+        );
     }
 
 
     /**
-     * @Route("/carreras", name="pre_estadisticos_carreras")
+     * @Route("/carreras", name="post_estadisticos_carreras")
      * @Template()
      */
     public function carrerasAction()
@@ -63,6 +63,7 @@ class EstadisticosPreEvaluacionController extends Controller
        ->createQuery("
             SELECT  a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.carrera
             ORDER BY cantidad DESC"
@@ -70,13 +71,13 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/lugarorigen", name="pre_estadisticos_lugarorigen")
+     * @Route("/lugarorigen", name="post_estadisticos_lugarorigen")
      * @Template()
      */
     public function lugarOrigenAction()
@@ -89,6 +90,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.lugarOrigen, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.lugarOrigen
             ORDER BY cantidad DESC"
@@ -96,13 +98,13 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/lugarorigen/{carrera}", name="pre_estadisticos_lugarorigen_carrera")
+     * @Route("/lugarorigen/{carrera}", name="post_estadisticos_lugarorigen_carrera")
      * @Template()
      */
     public function lugarOrigenCarreraAction($carrera)
@@ -115,6 +117,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.lugarOrigen, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
                 AND a.carrera = :carrera
             GROUP BY a.lugarOrigen
@@ -125,14 +128,14 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarrera($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
 
         return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 
             'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/escuelaprocedencia", name="pre_estadisticos_escuelaprocedencia")
+     * @Route("/escuelaprocedencia", name="post_estadisticos_escuelaprocedencia")
      * @Template()
      */
     public function escuelaProcedenciaAction()
@@ -145,6 +148,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.escuelaProcedencia, COUNT(a.ficha) as cantidad  FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.escuelaProcedencia
             ORDER BY cantidad DESC"
@@ -152,13 +156,13 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/escuelaprocedencia/{carrera}", name="pre_estadisticos_escuelaprocedencia_carrera")
+     * @Route("/escuelaprocedencia/{carrera}", name="post_estadisticos_escuelaprocedencia_carrera")
      * @Template()
      */
     public function escuelaProcedenciaCarreraAction($carrera)
@@ -171,6 +175,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.escuelaProcedencia, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
                 AND a.carrera = :carrera
             GROUP BY a.escuelaProcedencia
@@ -181,14 +186,14 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarrera($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
 
         return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
 
     /**
-     * @Route("/bachillerato", name="pre_estadisticos_bachillerato")
+     * @Route("/bachillerato", name="post_estadisticos_bachillerato")
      * @Template()
      */
     public function bachilleratoAction()
@@ -201,6 +206,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.bachillerato
             ORDER BY cantidad DESC"
@@ -208,14 +214,14 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/bachillerato/{carrera}", name="pre_estadisticos_bachillerato_carrera")
+     * @Route("/bachillerato/{carrera}", name="post_estadisticos_bachillerato_carrera")
      * @Template()
      */
     public function bachilleratoCarreraAction($carrera)
@@ -228,6 +234,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
                 AND a.carrera = :carrera
             GROUP BY a.bachillerato
@@ -238,14 +245,14 @@ class EstadisticosPreEvaluacionController extends Controller
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarrera($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
 
         return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
 
     /**
-     * @Route("/genero", name="pre_estadisticos_genero")
+     * @Route("/genero", name="post_estadisticos_genero")
      * @Template()
      */
     public function generoAction()
@@ -258,19 +265,20 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.genero
             ORDER BY cantidad DESC"
         )->setParameter('periodo', $periodo);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
     /**
-     * @Route("/genero/{carrera}", name="pre_estadisticos_genero_carrera")
+     * @Route("/genero/{carrera}", name="post_estadisticos_genero_carrera")
      * @Template()
      */
     public function generoCarreraAction($carrera)
@@ -283,6 +291,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
                AND a.carrera = :carrera
             GROUP BY a.genero
@@ -292,7 +301,7 @@ class EstadisticosPreEvaluacionController extends Controller
         ->setParameter('periodo', $periodo);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarrera($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
 
         return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
@@ -300,7 +309,7 @@ class EstadisticosPreEvaluacionController extends Controller
 
 
     /**
-     * @Route("/promedioBachillerato", name="pre_estadisticos_promediobachillerato")
+     * @Route("/promedioBachillerato", name="post_estadisticos_promediobachillerato")
      * @Template()
      */
     public function promedioBachilleratoAction()
@@ -313,13 +322,14 @@ class EstadisticosPreEvaluacionController extends Controller
         ->createQuery("
             SELECT  a.promedioBachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
+            JOIN a.hoja h
             WHERE  p.id = :periodo
             GROUP BY a.promedioBachillerato
             ORDER BY cantidad DESC"
         )->setParameter('periodo', $periodo);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }

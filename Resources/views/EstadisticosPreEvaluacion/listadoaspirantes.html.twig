@@ -1,0 +1,78 @@
+{% extends 'ItsurAeiBundle::adminlayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <p class="titulosNegro" align="center">Reporte de Aspirantes</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+     <table align="center" border="1" bordercolor="#D6D8D6">
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Nombre </p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Carrera  </p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Lugar de Origen</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro"> Escuela de Procedencia</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro"> Bachillerato </p>
+         </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro"> Promedio del Bachillerato</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Género</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Fecha de Nacimiento</p>
+         </th>
+     </tr>
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.ficha}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.nombre}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.carrera}}  </p>
+                </td>
+                <td>
+                    <p align="left" class="datosNegro">{{aspirante.lugarOrigen}} </p>
+                </td>
+                <td>
+                    <p align="left" class="datosNegro">{{aspirante.escuelaProcedencia}} </p>
+                </td>
+                <td>
+                    <p align="left" class="datosNegro">{{aspirante.bachillerato}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.promediobachillerato}}</p>
+                </td>
+                <td>
+                    <p align="left" class="datosNegro">{{aspirante.genero}}
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.fechanacimiento.format('d-m-Y')}}
+                </td>
+            </tr>
+    {% else %}
+        <tr>
+            <p class="advertencia" align="center"> No se encontraron aspirantes.</p>
+        </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}

@@ -26,45 +26,9 @@ class AdministracionController extends Controller
         return $this->render('ItsurAeiBundle:Administracion:index.html.twig');
     }
     
-    /**
-     * @Route("/listado", name="admin_listado_aspirantes")
-     * @Template()
-     */
-    public function listadoAspirantesAction()
-    {
-        $id = $this->container->getParameter('periodo.actual');
-        
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
-        
-        $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-        ->findAllByPeriodo($periodo->getId());
 
-        return $this->render('ItsurAeiBundle:Administracion:listadoaspirantes.html.twig', array(
-            'aspirantes'=> $aspirantes,
-            'periodo'=>$periodo,
-        ));
-    }
     
-    /**
-     * @Route("/listadocalificaciones", name="admin_calificaciones_aspirantes")
-     * @Template()
-     */
-    public function calificacionesAspirantesAction()
-    {
-        $id = $this->container->getParameter('periodo.actual');
 
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
-
-        $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-        ->findAllByPeriodoWithHoja($periodo->getId());
-
-        return $this->render('ItsurAeiBundle:Administracion:calificacionesaspirantes.html.twig', array(
-            'aspirantes'=> $aspirantes,
-            'periodo'=>$periodo,
-        ));
-    }
     
     /**
      * @Route("/areasaspirante", name="admin_areas_aspirante")

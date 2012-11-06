@@ -1,20 +1,21 @@
 {% block title %}
-    Estadisticos
+    Reportes
 {% endblock %}
 
 {% block body %}
-	<h1>Reportes Estadisticos Pre Evaluación</h1>
+	<h1>Reportes Pre Evaluación</h1>
 	<br/>
-	<a href="{{path('estadisticos_carreras') }}">Carreras</a>
+	<a href="{{path('listado_aspirantes') }}">Listado aspirantes</a>
 	<br/>
-	<a href="{{path('estadisticos_lugarorigen') }}">Lugar de origen</a>
+	<a href="{{path('pre_estadisticos_carreras') }}">Carreras</a>
 	<br/>
-	<a href="{{path('estadisticos_escuelaprocedencia') }}">Escuela de procedencia</a>
+	<a href="{{path('pre_estadisticos_lugarorigen') }}">Lugar de origen</a>
 	<br/>
-	<a href="{{path('estadisticos_bachillerato') }}">Bachillerato</a>
+	<a href="{{path('pre_estadisticos_escuelaprocedencia') }}">Escuela de procedencia</a>
 	<br/>
-	<a href="{{path('estadisticos_genero') }}">Genero</a>
+	<a href="{{path('pre_estadisticos_bachillerato') }}">Bachillerato</a>
 	<br/>
-	<a href="{{path('estadisticos_promediobachillerato') }}">Promedio Bachillerato</a>
-	
+	<a href="{{path('pre_estadisticos_genero') }}">Genero</a>
+	<br/>
+	<a href="{{path('pre_estadisticos_promediobachillerato') }}">Promedio Bachillerato</a>
 {% endblock %}

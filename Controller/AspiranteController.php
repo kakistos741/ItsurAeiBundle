@@ -61,7 +61,7 @@ class AspiranteController extends Controller
         $aspirante = $em->getRepository('ItsurAeiBundle:Aspirante')->find($ficha);
 
         if(!$aspirante){
-            throw $this->createNotFoundException('No se encontró el aspirante con la ficha '.$ficha);
+            throw $this->createNotFoundException('No se encontrÃ³ el aspirante con la ficha '.$ficha);
         }
 
         $form = $this->createForm(new AspiranteType(), $aspirante);
@@ -92,7 +92,7 @@ class AspiranteController extends Controller
         ->findByPeriodoAndFicha($periodo, $ficha);
 
         if(!$aspirante){
-            throw $this->createNotFoundException('No se encontró el aspirante con la ficha '.$ficha);
+            throw $this->createNotFoundException('No se encontrÃ³ el aspirante con la ficha '.$ficha);
         }
         return $this->render('ItsurAeiBundle:Aspirante:show.html.twig',array(
         'aspirante'=> $aspirante,
@@ -101,7 +101,7 @@ class AspiranteController extends Controller
 
     /**
      * @Route("/list", defaults={"carrera"="TODAS", "order"="asc"}),
-     * @Route("/list/{carrera}/{order}", name="aspirante_list")
+     * @Route("/list/{carrera}/{order}", name="aspirante_list") 
      * @Template()
      */
     public function listAction($carrera, $order)

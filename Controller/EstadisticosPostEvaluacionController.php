@@ -333,5 +333,58 @@ class EstadisticosPostEvaluacionController extends Controller
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
+
+    /**
+     * @Route("/preferenciasgenerocarrera", name="post_estadisticos_preferencia_generos_carrera")
+     * @Template()
+     */
+    public function preferenciaGeneroCarreraAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $this->container->getParameter('periodo.actual');
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        
+        $query = $this->getDoctrine()->getEntityManager()
+        ->createQuery("
+            SELECT  a.carrera, a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+            GROUP BY a.genero, a.carrera
+            ORDER BY cantidad DESC"
+        )->setParameter('periodo', $periodo);
+
+        $datos = $query->getResult();
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+    }
+
+
+    /**
+     * @Route("/preferenciasbachilleratocarrera", name="post_estadisticos_preferencia_bachillerato_carrera")
+     * @Template()
+     */
+    public function preferenciaBachilleratoCarreraAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $this->container->getParameter('periodo.actual');
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        
+        $query = $this->getDoctrine()->getEntityManager()
+        ->createQuery("
+            SELECT  a.carrera, a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+            GROUP BY a.carrera, a.bachillerato
+            ORDER BY cantidad DESC"
+        )->setParameter('periodo', $periodo);
+
+        $datos = $query->getResult();
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+    }
 }
 

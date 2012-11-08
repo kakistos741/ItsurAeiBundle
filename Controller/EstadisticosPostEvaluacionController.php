@@ -335,10 +335,10 @@ class EstadisticosPostEvaluacionController extends Controller
     }
 
     /**
-     * @Route("/preferenciasgenerocarrera", name="post_estadisticos_preferencia_generos_carrera")
+     * @Route("/preferenciasgenerocarrera", name="post_estadisticos_preferencia_generos_carreras")
      * @Template()
      */
-    public function preferenciaGeneroCarreraAction()
+    public function preferenciaGeneroCarrerasAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
         $id = $this->container->getParameter('periodo.actual');
@@ -350,22 +350,22 @@ class EstadisticosPostEvaluacionController extends Controller
             JOIN a.periodo p
             JOIN a.hoja h
             WHERE  p.id = :periodo
-            GROUP BY a.genero, a.carrera
-            ORDER BY cantidad DESC"
+            GROUP BY a.carrera, a.genero
+            ORDER BY a.carrera ASC, a.genero ASC"
         )->setParameter('periodo', $periodo);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }
 
 
     /**
-     * @Route("/preferenciasbachilleratocarrera", name="post_estadisticos_preferencia_bachillerato_carrera")
+     * @Route("/preferenciasgenerocarrera/{carrera}", name="post_estadisticos_preferencia_generos_carrera")
      * @Template()
      */
-    public function preferenciaBachilleratoCarreraAction()
+    public function preferenciaGeneroCarreraAction($carrera)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $id = $this->container->getParameter('periodo.actual');
@@ -373,16 +373,76 @@ class EstadisticosPostEvaluacionController extends Controller
         
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
-            SELECT  a.carrera, a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
+            SELECT  a.carrera, a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
             JOIN a.periodo p
             JOIN a.hoja h
             WHERE  p.id = :periodo
-            GROUP BY a.carrera, a.bachillerato
-            ORDER BY cantidad DESC"
+                AND a.carrera = :carrera 
+            GROUP BY a.carrera, a.genero
+            ORDER BY a.carrera ASC, a.genero ASC"
+        )
+        ->setParameter('carrera', $carrera)
+        ->setParameter('periodo', $periodo);
+
+        $datos = $query->getResult();
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+    }
+
+
+    /**
+     * @Route("/preferenciasbachilleratocarrera", name="post_estadisticos_preferencia_bachillerato_carreras")
+     * @Template()
+     */
+    public function preferenciaBachilleratoCarrerasAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $this->container->getParameter('periodo.actual');
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        
+        $query = $this->getDoctrine()->getEntityManager()
+        ->createQuery("
+            SELECT  a.bachillerato, a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+            GROUP BY a.bachillerato, a.carrera
+            ORDER BY a.bachillerato ASC, a.carrera ASC"
         )->setParameter('periodo', $periodo);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->count($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+    }
+
+
+    /**
+     * @Route("/preferenciasbachilleratocarrera/{carrera}", name="post_estadisticos_preferencia_bachillerato_carrera")
+     * @Template()
+     */
+    public function preferenciaBachilleratoCarreraAction($carrera)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $this->container->getParameter('periodo.actual');
+        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        
+        $query = $this->getDoctrine()->getEntityManager()
+        ->createQuery("
+            SELECT  a.bachillerato, a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+                AND a.carrera = :carrera 
+            GROUP BY a.bachillerato, a.carrera
+            ORDER BY a.bachillerato ASC, a.carrera ASC"
+        )
+        ->setParameter('periodo', $periodo)
+        ->setParameter('carrera', $carrera);
+
+        $datos = $query->getResult();
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
 
         return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
     }

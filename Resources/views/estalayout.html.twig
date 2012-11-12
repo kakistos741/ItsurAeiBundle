@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+		    {% stylesheets '@ItsurAeiBundle/Resources/public/css/basic.css'%}
+			   <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+		{% endstylesheets%}
+		{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+		
+{% block javascripts %}
+        
+		{% javascripts  '@ItsurAeiBundle/Resources/public/js/enhance.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+		
+       
+{% endblock %}
+		
+    </head>
+    <body >
+            {% block body %}
+			
+			
+			{% endblock %}
+            
+    </body>
+</html>

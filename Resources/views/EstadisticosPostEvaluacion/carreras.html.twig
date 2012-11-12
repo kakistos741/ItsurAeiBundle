@@ -1,26 +1,74 @@
-{% block title %}
-    Estadisticos
+{% extends 'ItsurAeiBundle::estalayout.html.twig' %}
+
+{% block title %}    
+     Estadisticos
 {% endblock %}
 
+
+{% block javascripts %}
+         {{ parent() }}
+	
+		
+     <script type="text/javascript">
+		// Run capabilities test
+		enhance({
+			loadScripts: [
+			{% javascripts  '@ItsurAeiBundle/Resources/public/js/excanvas.js' %}
+				{src: '{{ asset_url }}', iecondition: 'all'},
+			{% endjavascripts %}
+			{% javascripts  '@ItsurAeiBundle/Resources/public/js/jquery144min.js' %}	
+				'{{ asset_url }}',
+			{% endjavascripts %}
+			{% javascripts  '@ItsurAeiBundle/Resources/public/js/visualize.jQuery.js' %}	
+				'{{ asset_url }}',
+			{% endjavascripts %}
+			{% javascripts  '@ItsurAeiBundle/Resources/public/js/example.js' %}	
+				'{{ asset_url }}'
+			],
+			{% endjavascripts %}
+			loadStyles: [
+			{% stylesheets  '@ItsurAeiBundle/Resources/public/css/visualize.css' %}	
+				'{{ asset_url }}',
+			{% endstylesheets %}
+			{% stylesheets  '@ItsurAeiBundle/Resources/public/css/visualize-dark.css' %}		
+				'{{ asset_url }}'
+			]
+			{% endstylesheets %}	
+		});   
+    </script>
+			
+   
+{% endblock%}
+
 {% block body %}
-    <br/>
-    {{ periodo.anio}}  {{ periodo.semestre}} 
-    <br/>
-    <br/>
+   
+  
+   
     <table border="1">
-    <tr>
+    <caption> {{ periodo.anio}}  {{ periodo.semestre}} </caption>
+	<thead>
+	<tr>
         <th>Carrera</th>
         <th>Cantidad</th>
     </tr>
-
+    </thead>
+	<tbody>
+	
        {% for dato in datos %}
             <tr>
            {% for datox in dato %}
-             <td>{{datox}}</td>
+             <td >{{datox}}</td>
            {% endfor %}
            </tr>
-       {% endfor %}
-
+    
+	   {% endfor %}
+	   
+   </tbody>
+   </table>
+   <br />
     Total aspirantes: {{total}}
-    <br/>
+    
+   
+   
+   
 {% endblock %}

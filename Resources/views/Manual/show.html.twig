@@ -27,7 +27,7 @@
            Sección: {{seccion.nombre}}
            <br/>
            {% for tema in seccion.temas %}
-                Tema: {{tema.nombre}}
+                Tema: {{tema.nombre}}  <td> <a href="{{path('manual_gruposPreguntas',{'temaid':tema.id} ) }}">A</a> </td>
                 <br/>
             {% endfor %}
 

@@ -1,0 +1,55 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Manual
+{% endblock %}
+
+{% block body %}
+   <h1>Tema</h1> 
+    <br/>
+    Puntaje: {{tema.nombre}}
+    <br/>
+    Puntaje: {{tema.puntaje}}
+    <br/>
+    Cantidad de grupos: {{tema.grupos.count}}
+    <br/>
+    Grupos
+    <br/>
+    <br/>
+    {% for grupo in tema.grupos %}
+        <br/>
+        Puntaje: {{grupo.puntaje}}
+        <br/>
+        Instrucciones: {{grupo.instrucciones}}
+        <br/>
+        Caso: {{grupo.caso}}
+        <br/>
+        Cantidad de preguntas: {{grupo.cantidadPreguntas}}
+        <br/>
+        Preguntas
+        <br/>
+        <br/>
+        {% for pregunta in grupo.preguntas %}
+           Sentencia: {{pregunta.sentencia}}
+           <br/>
+           Objetivo: {{pregunta.objetivo}}
+           <br/>
+           Imagen: {{pregunta.imagen}}
+           <br/>
+           <br/>
+           {#imagen de respuesta?: {{pregunta.respuestaImagenes}}#}
+           <br/>
+           Opción 1: {{pregunta.opcion1}}
+           <br/>
+           Opción 2: {{pregunta.opcion2}}
+           <br/>
+           Opción 3: {{pregunta.opcion3}}
+           <br/>
+           Opción 4: {{pregunta.opcion4}}
+           <br/>
+           Respuesta 4: {{pregunta.respuesta}}
+           <br/>
+        {% endfor %}
+        <br/>
+    {% endfor %}
+
+{% endblock %}

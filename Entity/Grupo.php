@@ -10,10 +10,11 @@ use Itsur\AeiBundle\Entity\Pregunta;
  * Itsur\AeiBundle\Entity\Grupo
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Itsur\AeiBundle\Repository\GrupoRepository")
  */
 class Grupo
 {
+ 
     /**
      * @var integer $id
      *

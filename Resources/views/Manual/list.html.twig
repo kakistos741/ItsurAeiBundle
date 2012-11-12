@@ -21,7 +21,7 @@
                 <td>{{manual.puntaje}}</td>
                 <td>{{manual.puntajeSeleccion}}</td>
                 <td>{{manual.puntajeDiagnostico}}</td>
-                <td> <a href="{{path('area_list',{'manual':manual.clave} ) }}">A</a> </td>
+                <td> <a href="{{path('manual_show',{'clave':manual.clave} ) }}">A</a> </td>
             </tr>
         {% endfor %}
             <tr>Numero de manuales {{noManuales}} </tr>

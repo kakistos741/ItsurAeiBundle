@@ -66,6 +66,22 @@ class ManualController extends Controller
         ));
 
     }
+
+
+     /**
+     * @Route("/grupospreguntas/{temaid}", name="manual_gruposPreguntas")
+     * @Template()
+     */
+    public function gruposPreguntasAction($temaid)
+    {
+        $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:Tema');
+        $tema =  $repository->findOneById($temaid);
+
+        return array(
+            'tema'=> $tema,
+        );
+
+    }
 }
 
 

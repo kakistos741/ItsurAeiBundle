@@ -8,6 +8,16 @@ namespace Itsur\AeiBundle\Entity;
  */
 class Utilerias
 {
+    
+    public static function periodoActual($doctrine){
+      $repository = $doctrine->getRepository('ItsurAeiBundle:Parametro');
+      $parametro =  $repository->findOneByNombre('periodo.actual');
+      $periodoId =  $parametro->getValor();
+      $periodo = $doctrine->getRepository('ItsurAeiBundle:Periodo')->findOneById($periodoId);
+      return $periodo;
+    }
+
+
     public static function ordenAleatorio($cantidad){
            $posiciones = array();
            $nuevo = 0;

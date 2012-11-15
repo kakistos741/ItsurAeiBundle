@@ -33,3 +33,7 @@ _aei_admin_manual:
 _aei_admin_area:
     resource: "@ItsurAeiBundle/Controller/AreaController.php"
     type:     annotation
+
+_aei_admin_area:
+    resource: "@ItsurAeiBundle/Controller/ParametroController.php"
+    type:     annotation

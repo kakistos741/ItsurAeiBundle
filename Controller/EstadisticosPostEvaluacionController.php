@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Leg\GoogleChartsBundle\Charts\Gallery\BarChart;
 use Leg\GoogleChartsBundle\Charts\Gallery\PieChart;
 use Leg\GoogleChartsBundle\Charts\Gallery\Pie\ThreeDimensionsChart;
+use Itsur\AeiBundle\Entity\Utilerias;
 
 /**
 * @Route("/admin/post/esta")
@@ -21,11 +22,10 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+     
+        $periodo = Utilerias::periodoActual($this->getDoctrine());
         
-        return array();
+        return array('periodo'=>$periodo);
     }
 
     /**

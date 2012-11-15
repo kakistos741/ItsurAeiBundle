@@ -1,0 +1,39 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Listado de Parametros
+{% endblock %}
+
+{% block body %}
+     
+	 <a href="{{ path('periodo_new') }}" >Nuevo periodo</a>
+    
+	<table border="1">
+		<tr>
+		<th>Nombre</th>
+		<th>Valor</th>
+		<th>Operaciones</th>
+		</tr>
+		
+		
+	{% for parametro in parametros %}
+	       <tr>
+            <td>	
+			{{parametro.nombre}} 
+			</td>
+			<td>
+			{{parametro.valor}}
+			</td>
+			<td>
+			</td>
+	     </tr>
+	 {% else %}
+         <tr>
+            <td colspan="2">
+             No se encontraron parametros.
+	  		</td>
+	     </tr>
+     {% endfor %}
+
+	<table>
+
+{% endblock %}

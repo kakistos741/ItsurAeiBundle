@@ -21,6 +21,10 @@
                  Lista de manuales
              </a><br />
 
+             <a href="{{ path('configuracion_cambiar') }}" class="button verde">
+                 Configuración
+             </a><br />
+
   <h1>Reportes Pre Evaluación</h1>
   <br/>
   <a href="{{ path('listado_aspirantes') }}" class="button verde">
@@ -44,12 +48,8 @@
   <a href="{{path('pre_estadisticos_preferencia_bachillerato_carreras') }}">Preferencia de carrera por bachillerato</a>
 
 
-    <h1>Reportes  Post Evaluación</h1>
-  <br/>
-  <a href="{{ path('calificaciones_aspirantes') }}" class="button verde">
-                 Calificaciones de Aspirantes
-             </a>
-  <br/>
+    <h1>Reportes Post Evaluación</h1>
+  
   <a href="{{path('post_estadisticos_carreras') }}">Carreras</a>
   <br/>
   <a href="{{path('post_estadisticos_lugarorigen') }}">Lugar de origen</a>
@@ -65,6 +65,10 @@
   <a href="{{path('post_estadisticos_preferencia_generos_carreras') }}">Preferencia de carrera por genero</a>
   <br/>
   <a href="{{path('post_estadisticos_preferencia_bachillerato_carreras') }}">Preferencia de carrera por bachillerato</a>		
-			
-
+		
+  <h1>Resultados de Evaluación</h1>	
+  <a href="{{ path('calificaciones_aspirantes') }}" class="button verde">
+                 Calificaciones de Aspirantes
+             </a>
+  <br/>
 {% endblock %}

@@ -18,6 +18,15 @@ class Utilerias
     }
 
 
+    public static function manualActual($doctrine){
+      $repository = $doctrine->getRepository('ItsurAeiBundle:Parametro');
+      $parametro =  $repository->findOneByNombre('manual.actual');
+      $claveManual =  $parametro->getValor();
+      $manual = $doctrine->getRepository('ItsurAeiBundle:Manual')->findOneByClave($claveManual);
+      return $manual;
+    }
+
+
     public static function ordenAleatorio($cantidad){
            $posiciones = array();
            $nuevo = 0;

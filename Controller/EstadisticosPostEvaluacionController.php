@@ -23,9 +23,9 @@ class EstadisticosPostEvaluacionController extends Controller
     public function indexAction()
     {
      
-        $periodo = Utilerias::periodoActual($this->getDoctrine());
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
-        return array('periodo'=>$periodo);
+        return array('periodo'=>$periodoActual);
     }
 
     /**
@@ -34,17 +34,14 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function calificacionesAspirantesAction()
     {
-        $id = $this->container->getParameter('periodo.actual');
-
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
         $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-        ->findAllByPeriodoWithHoja($periodo->getId());
+        ->findAllByPeriodoWithHoja($periodoActual->getId());
 
         return array(
             'aspirantes'=> $aspirantes,
-            'periodo'=>$periodo,
+            'periodo'=>$periodoActual,
         );
     }
 
@@ -55,10 +52,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function carrerasAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
+        $em = $this->getDoctrine()->getEntityManager();
         $query = $this->getDoctrine()->getEntityManager()
        ->createQuery("
             SELECT  a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -67,13 +63,13 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.carrera
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -82,10 +78,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function lugarOrigenAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
+        $em = $this->getDoctrine()->getEntityManager();  
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.lugarOrigen, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -94,13 +89,13 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.lugarOrigen
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -109,10 +104,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function lugarOrigenCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.lugarOrigen, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -124,14 +118,14 @@ class EstadisticosPostEvaluacionController extends Controller
             ORDER BY cantidad DESC"
         )
         ->setParameter('carrera', $carrera)
-        ->setParameter('periodo', $periodo);
+        ->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
         return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 
-            'periodo'=>$periodo);
+            'periodo'=>$periodoActual);
     }
 
     /**
@@ -140,10 +134,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function escuelaProcedenciaAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.escuelaProcedencia, COUNT(a.ficha) as cantidad  FROM ItsurAeiBundle:Aspirante a
@@ -152,13 +145,13 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.escuelaProcedencia
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -167,10 +160,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function escuelaProcedenciaCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.escuelaProcedencia, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -182,13 +174,13 @@ class EstadisticosPostEvaluacionController extends Controller
             ORDER BY cantidad DESC"
         )
         ->setParameter('carrera', $carrera)
-        ->setParameter('periodo', $periodo);
+        ->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
-        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -198,10 +190,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function bachilleratoAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -210,14 +201,14 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.bachillerato
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -226,10 +217,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function bachilleratoCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.bachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -241,13 +231,13 @@ class EstadisticosPostEvaluacionController extends Controller
             ORDER BY cantidad DESC"
         )
         ->setParameter('carrera', $carrera)
-        ->setParameter('periodo', $periodo);
+        ->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
 
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
-        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -257,10 +247,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function generoAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -269,12 +258,12 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.genero
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -283,10 +272,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function generoCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -298,12 +286,12 @@ class EstadisticosPostEvaluacionController extends Controller
             ORDER BY cantidad DESC"
         )
         ->setParameter('carrera', $carrera)
-        ->setParameter('periodo', $periodo);
+        ->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
-        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'carrera'=>$carrera, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -314,10 +302,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function promedioBachilleratoAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.promedioBachillerato, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -326,12 +313,12 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.promedioBachillerato
             ORDER BY cantidad DESC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
     /**
@@ -340,10 +327,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function preferenciaGeneroCarrerasAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.carrera, a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -352,12 +338,12 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.carrera, a.genero
             ORDER BY a.carrera ASC, a.genero ASC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -367,10 +353,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function preferenciaGeneroCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.carrera, a.genero, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -382,12 +367,12 @@ class EstadisticosPostEvaluacionController extends Controller
             ORDER BY a.carrera ASC, a.genero ASC"
         )
         ->setParameter('carrera', $carrera)
-        ->setParameter('periodo', $periodo);
+        ->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -397,10 +382,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function preferenciaBachilleratoCarrerasAction()
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.bachillerato, a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -409,12 +393,12 @@ class EstadisticosPostEvaluacionController extends Controller
             WHERE  p.id = :periodo
             GROUP BY a.bachillerato, a.carrera
             ORDER BY a.bachillerato ASC, a.carrera ASC"
-        )->setParameter('periodo', $periodo);
+        )->setParameter('periodo', $periodoActual);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($id);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countWithHoja($periodoActual->getId());
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 
 
@@ -424,10 +408,9 @@ class EstadisticosPostEvaluacionController extends Controller
      */
     public function preferenciaBachilleratoCarreraAction($carrera)
     {
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
-        
         $query = $this->getDoctrine()->getEntityManager()
         ->createQuery("
             SELECT  a.bachillerato, a.carrera, COUNT(a.ficha) as cantidad FROM ItsurAeiBundle:Aspirante a
@@ -438,13 +421,13 @@ class EstadisticosPostEvaluacionController extends Controller
             GROUP BY a.bachillerato, a.carrera
             ORDER BY a.bachillerato ASC, a.carrera ASC"
         )
-        ->setParameter('periodo', $periodo)
+        ->setParameter('periodo', $periodoActual)
         ->setParameter('carrera', $carrera);
 
         $datos = $query->getResult();
-        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($id, $carrera);
+        $total = $repository = $em->getRepository('ItsurAeiBundle:Aspirante')->countByCarreraWithHoja($periodoActual->getId(), $carrera);
 
-        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodo);
+        return  array('datos'=> $datos, 'total'=>$total[0][1], 'periodo'=>$periodoActual);
     }
 }
 

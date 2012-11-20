@@ -1,0 +1,22 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Configuraciones actuales
+{% endblock %}
+
+{% block body %}
+     <h1>Parametros de configuracion</h1>
+
+     <table border="1">
+     	<tr>
+     		<td>Nombre</td>
+     		<td>Valor</td>
+     	</tr>
+     	{% for parametro in parametros %}
+            <tr>
+                <td>{{parametro.nombre}}</td>
+                <td>{{parametro.valor}}</td>
+            </tr>
+        {% endfor %}
+     </table>
+
+{% endblock %}

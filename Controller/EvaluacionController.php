@@ -19,7 +19,6 @@ use Itsur\AeiBundle\Form\AspiranteType;
  */
 class EvaluacionController extends Controller
 {
-    private $periodo;
 
     /**
      * @Route("/index", name="evaluacion_index")
@@ -27,24 +26,18 @@ class EvaluacionController extends Controller
      */
     public function indexAction()
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+         $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
-         return $this->render('ItsurAeiBundle:Evaluacion:index.html.twig',
-                     array('periodo' =>$this->periodo));
+         return array('periodo' =>$periodoActual);
     }
     
     /**
      * @Route("/identificacion", name="evaluacion_identificacion")
      * @Template()
      */
-    public function indentificacionAction(Request $request)
+    public function identificacionAction(Request $request)
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
-        
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
         $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
 
@@ -62,7 +55,7 @@ class EvaluacionController extends Controller
             
             //$periodo = $this->container->getParameter('periodo.actual');
             $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
+            ->findByPeriodoAndFicha($periodoActual->getId(), $ficha);
 
             if($aspirante)
             {
@@ -73,17 +66,16 @@ class EvaluacionController extends Controller
             {
                 return $this->render('ItsurAeiBundle:Evaluacion:noencontrado.html.twig',
                     array('ficha'=> $ficha,
-                         'periodo'=>$this->periodo,
+                         'periodo'=>$periodoActual,
                     ));
             }
 
         }
         
-        return $this->render('ItsurAeiBundle:Evaluacion:identificacion.html.twig',
-        array(
+        return array(
             'form'=> $form->createView(),
-            'periodo'=>$this->periodo,
-        ));
+            'periodo'=>$periodoActual,
+        );
     }
     
     /**
@@ -92,22 +84,18 @@ class EvaluacionController extends Controller
      */
     public function confirmacionAction($ficha, $aplicador)
     {
-
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
-         $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
+        $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
+        ->findByPeriodoAndFicha($periodoActual->getId(), $ficha);
 
          if($aspirante)
          {
-                 return $this->render('ItsurAeiBundle:Evaluacion:confirmacion.html.twig',
-                 array(
-                    'periodo'=> $this->periodo,
+                 return array(
+                    'periodo'=> $periodoActual,
                     'aspirante'=> $aspirante,
                     'aplicador'=> $aplicador,
-                ));
+                );
          }
 
 
@@ -122,18 +110,16 @@ class EvaluacionController extends Controller
      */
     public function instruccionesAction($ficha, $aplicador)
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+         $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
          $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
+         ->findByPeriodoAndFicha($periodoActual->getId(), $ficha);
          
         if($aspirante->getHoja()){
             return $this->render('ItsurAeiBundle:Evaluacion:evaluacionprevia.html.twig',
                 array(
                     'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
+                    'periodo'=> $periodoActual,
                 ));
         }
        
@@ -142,14 +128,14 @@ class EvaluacionController extends Controller
              $session = $this->getRequest()->getSession();
              $session->start();
 
-             $manual = $id = $this->container->getParameter('manual.clave');
+             $manual = Utilerias::manualActual($this->getDoctrine());
 
-             $hoja = HojaRespuestasFactory::getHojaRespuestas($manual, $this->getDoctrine());
+             $hoja = HojaRespuestasFactory::getHojaRespuestas($manual->getClave(), $this->getDoctrine());
              $hoja->setAplicador($aplicador);
              $hoja->setAspirante($aspirante);
              $hoja->setFecha( new \DateTime());
              $hoja->setCalificacion(0);
-             $hoja->setPeriodo($this->periodo);
+             $hoja->setPeriodo($periodoActual);
              $aspirante->setHoja($hoja);
 
              $em = $this->getDoctrine()->getEntityManager();
@@ -157,20 +143,19 @@ class EvaluacionController extends Controller
              $em->flush();
              $session->set('aspirante', $aspirante);
                  
-             return $this->render('ItsurAeiBundle:Evaluacion:instrucciones.html.twig',
-                array(
+             return array(
                     'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
+                    'periodo'=> $periodoActual,
                     'hoja'=> $hoja,
                     'area' =>1,
                     'seccion' =>1,
                     'tema' =>1,
                     'grupo' =>1,
-                ));
+                );
         }
         else
         {
-            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $periodoActual)));
         }
         
     }
@@ -181,16 +166,14 @@ class EvaluacionController extends Controller
      */
     public function grupoAction(Request $request, $ficha,$area,$seccion,$tema,$grupo)
     {
-       $id = $this->container->getParameter('periodo.actual');
-       $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+       $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
        $session = $this->getRequest()->getSession();
        $aspirante = $session->get('aspirante');
        if($aspirante)
         {
             $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:GrupoEvaluable');
-            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($id,
+            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($periodoActual->getId(),
                               $ficha, $area, $seccion, $tema, $grupo);
 
             if($grupoPreguntas)
@@ -220,7 +203,7 @@ class EvaluacionController extends Controller
                     array(
                         'form'=> $form->createView(),
                         'aspirante'=>$aspirante,
-                        'periodo'=> $this->periodo,
+                        'periodo'=> $periodoActual,
                         'grupoPreguntas'=> $grupoPreguntas,
                         'area' =>$area,
                         'seccion' =>$seccion,
@@ -233,7 +216,7 @@ class EvaluacionController extends Controller
                  return $this->render('ItsurAeiBundle:Evaluacion:gruponoencontrado.html.twig',
                     array(
                         'aspirante'=>$aspirante,
-                        'periodo'=> $this->periodo,
+                        'periodo'=> $periodoActual,
                         'area' =>$area,
                         'seccion' =>$seccion,
                         'tema' =>$tema,
@@ -247,7 +230,7 @@ class EvaluacionController extends Controller
          }
         else
         {
-            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $periodoActual)));
         }
     }
     
@@ -258,9 +241,7 @@ class EvaluacionController extends Controller
     public function despedidaAction($ficha)
     {
         //Se recupera el periodo actual.
-        $id = $this->container->getParameter('periodo.actual');
-        $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
         
         //Recuperamos de la session el aspirante que esta contestando la pregunta
         $session = $this->getRequest()->getSession();
@@ -270,7 +251,7 @@ class EvaluacionController extends Controller
         {
             //Recperamos la hoja de respuestas del aspirante actual.
             $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:HojaRespuestas');
-            $hoja =  $repository->findByPeriodoAndFicha($id, $ficha);
+            $hoja =  $repository->findByPeriodoAndFicha($periodoActual->getId(), $ficha);
 
             //Calculamos la calificacion de la hoja
             $aspirante->setHoja($hoja);
@@ -286,17 +267,15 @@ class EvaluacionController extends Controller
             $em->flush();
         
             //Mostramos el mensaje de despedida del examen.
-            return $this->render('ItsurAeiBundle:Evaluacion:despedida.html.twig',
-                    array(
+            return array(
                         'aspirante'=>$aspirante,
-                        'periodo'=> $this->periodo,
+                        'periodo'=> $periodoActual,
                         'hoja'=> $hoja,
-                    )
-                );
+                    );
        }
        else
        {
-            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $periodoActual)));
        }
     }
     
@@ -329,12 +308,12 @@ class EvaluacionController extends Controller
      */
     public function nuevoAction(Request $request)
     {
-         $em = $this->getDoctrine()->getEntityManager();
-        $id = $this->container->getParameter('periodo.actual');
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
+        $em = $this->getDoctrine()->getEntityManager();
+        
         $aspirante = new Aspirante();
-        $aspirante->setPeriodo($periodo);
+        $aspirante->setPeriodo($periodoActual);
 
         $form = $this->createForm(new AspiranteType(), $aspirante);
 
@@ -351,7 +330,8 @@ class EvaluacionController extends Controller
         }
 
         return $this->render('ItsurAeiBundle:Evaluacion:nuevoAspirante.html.twig',array(
-        'form'=> $form->createView(),
+            'form'=> $form->createView(),
+            'periodo'=>$periodoActual,
         ));
     }
     
@@ -362,16 +342,14 @@ class EvaluacionController extends Controller
      */
     public function guardarGrupoAction(Request $request, $ficha,$area,$seccion,$tema,$grupo)
     {
-        $id = $this->container->getParameter('periodo.actual');
-        $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
         $session = $this->getRequest()->getSession();
         $aspirante = $session->get('aspirante');
         if($aspirante)
         {
             $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:GrupoEvaluable');
-            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($id,
+            $grupoPreguntas =  $repository->findByPeriodoAndFichaAndAreaAndSeccionAndTemaAndOrder($periodoActual->getId(),
                               $ficha, $area, $seccion, $tema, $grupo);
                               
             $formBuilder = new GrupoType();
@@ -399,7 +377,7 @@ class EvaluacionController extends Controller
                 $em->flush();
                 
 
-                $siguientes = Utilerias::grupoSiguiente($this->getDoctrine(), $id, $aspirante->getFicha(), $area, $seccion, $tema, $grupo);
+                $siguientes = Utilerias::grupoSiguiente($this->getDoctrine(), $periodoActual->getId(), $aspirante->getFicha(), $area, $seccion, $tema, $grupo);
 
                 //¿Hubo cambio de tema?
                 if($siguientes['cambiotema']){
@@ -451,7 +429,7 @@ class EvaluacionController extends Controller
         }
         else
         {
-            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $periodoActual)));
         }
     }
     
@@ -461,12 +439,10 @@ class EvaluacionController extends Controller
      */
     public function reiniciarAction($ficha)
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+         $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
          $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-         ->findByPeriodoAndFicha($this->periodo->getId(), $ficha);
+         ->findByPeriodoAndFicha($periodoActual->getId(), $ficha);
 
         if($aspirante)
         {
@@ -478,7 +454,7 @@ class EvaluacionController extends Controller
              return $this->render('ItsurAeiBundle:Evaluacion:instrucciones.html.twig',
                 array(
                     'aspirante'=>$aspirante,
-                    'periodo'=> $this->periodo,
+                    'periodo'=> $periodoActual,
                     'hoja'=> $hoja,
                     'area' =>1,
                     'seccion' =>1,
@@ -488,7 +464,7 @@ class EvaluacionController extends Controller
         }
         else
         {
-            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $this->periodo)));
+            return $this->redirect($this->generateUrl('evaluacion_identificacion',array('periodo'=> $periodoActual)));
         }
     }
     
@@ -499,10 +475,7 @@ class EvaluacionController extends Controller
      */
     public function buscarAction(Request $request)
     {
-         $id = $this->container->getParameter('periodo.actual');
-         $this->periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
-
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
         $defaultData = array('aplicador' => 'Escribe el nombre el aplicador');
 
@@ -518,12 +491,12 @@ class EvaluacionController extends Controller
 
             //$periodo = $this->container->getParameter('periodo.actual');
             $aspirantes = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndNombre($this->periodo->getId(), $nombre);
+            ->findByPeriodoAndNombre($periodoActual->getId(), $nombre);
 
             return $this->render('ItsurAeiBundle:Evaluacion:aspirantesencontrados.html.twig',
                      array(
                          'aspirantes' => $aspirantes,
-                         'periodo' => $this->periodo,
+                         'periodo' => $periodoActual,
                      ));
 
         }
@@ -531,7 +504,7 @@ class EvaluacionController extends Controller
         return $this->render('ItsurAeiBundle:Evaluacion:buscar.html.twig',
         array(
             'form'=> $form->createView(),
-            'periodo'=>$this->periodo,
+            'periodo'=>$periodoActual,
         ));
 
     }

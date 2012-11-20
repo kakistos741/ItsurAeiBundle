@@ -25,13 +25,14 @@ class ManualController extends Controller
      */
     public function showAction($clave)
     {
+        
         $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:Manual');
 
         $manual =  $repository->findOneByClave($clave);
 
-        return $this->render('ItsurAeiBundle:Manual:show.html.twig',array(
-        'manual'=> $manual,
-        ));
+        return array(
+                    'manual'=> $manual,
+                );
     }
 
 
@@ -41,10 +42,7 @@ class ManualController extends Controller
      */
     public function actualAction()
     {
-        $claveManual = $this->container->getParameter('manual.clave');
-        $repository = $this->getDoctrine()->getRepository('ItsurAeiBundle:Manual');
-
-        $manual =  $repository->findOneByClave($claveManual);
+        $manualActual = Utilerias::manualActual($this->getDoctrine());
 
         return $this->render('ItsurAeiBundle:Manual:show.html.twig',array(
         'manual'=> $manual,

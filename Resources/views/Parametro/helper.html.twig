@@ -1,0 +1,33 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Configuraciones
+{% endblock %}
+
+{% block body %}
+     
+	 {{manual.nombre}} = {{manual.valor}}
+	 {{periodo.nombre}} = {{periodo.valor}}
+	 Clave Manual = {{claveManual}}
+	 Clave Periodo = {{clavePeriodo}}
+	 <br/>
+	 {% for dato in arreglo %}
+	 	{% for x in dato %}
+	 		{{x}}
+	 		{% for y in x %}
+	 			{{y}}
+	 			<br/>
+	 		{% endfor %}
+	 	{% endfor %}
+	 {% endfor %}
+	<br/>
+	 <br/>
+	 {% for dato in claveManual %}
+	 	{{dato}}
+	 {% endfor %}
+
+	 <br/>
+	 <br/>
+	 {% for dato in  clavePeriodo%}
+	 	{{dato}}
+	 {% endfor %}
+{% endblock %}

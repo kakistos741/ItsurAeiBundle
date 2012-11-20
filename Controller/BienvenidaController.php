@@ -16,7 +16,7 @@ class BienvenidaController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ItsurAeiBundle:Bienvenida:index.html.twig');
+        return array();
 
     }
 }

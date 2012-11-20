@@ -36,10 +36,7 @@ class AdministracionController extends Controller
      */
     public function areasAspiranteAction(Request $request)
     {
-        $id = $this->container->getParameter('periodo.actual');
-
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
         $form = $this->createFormBuilder()
         ->add('ficha', 'integer')
@@ -53,19 +50,19 @@ class AdministracionController extends Controller
 
             //$periodo = $this->container->getParameter('periodo.actual');
             $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndFichaWithHoja($periodo->getId(), $ficha);
+            ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
 
             if($aspirante)
             {
                   return $this->render('ItsurAeiBundle:Administracion:areasaspirante.html.twig',
                     array('aspirante'=> $aspirante,
-                         'periodo'=>$periodo,
+                         'periodo'=>$periodoActual,
                     ));
             }else
             {
                 return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
                     array('ficha'=> $ficha,
-                         'periodo'=>$periodo,
+                         'periodo'=>$periodoActual,
                     ));
             }
 
@@ -74,7 +71,7 @@ class AdministracionController extends Controller
         return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
         array(
             'form'=> $form->createView(),
-            'periodo'=>$periodo,
+            'periodo'=>$periodoActual,
             'reporte'=>1,
         ));
     }
@@ -86,10 +83,7 @@ class AdministracionController extends Controller
      */
     public function temasAspiranteAction(Request $request)
     {
-        $id = $this->container->getParameter('periodo.actual');
-
-        $periodo = $this->getDoctrine()->getRepository('ItsurAeiBundle:Periodo')
-        ->find($id);
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
 
         $form = $this->createFormBuilder()
         ->add('ficha', 'integer')
@@ -103,19 +97,19 @@ class AdministracionController extends Controller
 
             //$periodo = $this->container->getParameter('periodo.actual');
             $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndFichaWithHoja($periodo->getId(), $ficha);
+            ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
 
             if($aspirante)
             {
                   return $this->render('ItsurAeiBundle:Administracion:temasaspirante.html.twig',
                     array('aspirante'=> $aspirante,
-                         'periodo'=>$periodo,
+                         'periodo'=>$periodoActual,
                     ));
             }else
             {
                 return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
                     array('ficha'=> $ficha,
-                         'periodo'=>$periodo,
+                         'periodo'=>$periodoActual,
                     ));
             }
 
@@ -124,7 +118,7 @@ class AdministracionController extends Controller
         return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
         array(
             'form'=> $form->createView(),
-            'periodo'=>$periodo,
+            'periodo'=>$periodoActual,
             'reporte'=>2,
         ));
     }

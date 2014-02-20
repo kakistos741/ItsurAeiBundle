@@ -7,6 +7,7 @@ use Itsur\AeiBundle\Entity\iEvaluable;
 use Itsur\AeiBundle\Entity\TemaEvaluable;
 use Itsur\AeiBundle\Entity\AreaEvaluable;
 use Itsur\AeiBundle\Entity\Seccion;
+use \Itsur\AeiBundle\Entity\SeccionPeriodo;
 
 /**
  * Itsur\AeiBundle\Entity\NivelEvaluable
@@ -236,22 +237,23 @@ class SeccionEvaluable  implements iEvaluable
      *Crea los TemasEvalubles de la sección
      *
      */
-    public function crearTemas(){
+    public function crearTemas(\Itsur\AeiBundle\Entity\SeccionPeriodo $seccionPeriodo){
         $posiciones = Utilerias::ordenAleatorio($this->getSeccion()->getTemas()->count());
         $posicion = 0;
-        foreach($this->getSeccion()->getTemas() as $tema =>$valor){
+
+        foreach($seccionPeriodo->getTemas() as $tema =>$temaPeriodo){
 
           $te = new TemaEvaluable();
           $te->setOrden($posiciones[$posicion]);
           $te->setSeccion($this);
-          $te->setTema($valor);
+          $te->setTema($temaPeriodo->getTema());
           $te->setPuntaje(0);
           $te->setCalificacion(0);
           $te->setContestada(false);
           $posicion++;
           
           $this->addTemaEvaluable($te);
-          $te->crearGrupos();
+          $te->crearGrupos($temaPeriodo);
         }
 
     }

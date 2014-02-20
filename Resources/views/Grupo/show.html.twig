@@ -1,0 +1,49 @@
+<h1>Grupo</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Puntaje</th>
+            <td>{{ entity.puntaje }}</td>
+        </tr>
+        <tr>
+            <th>Instrucciones</th>
+            <td>{{ entity.instrucciones }}</td>
+        </tr>
+        <tr>
+            <th>Caso</th>
+            <td>{{ entity.caso }}</td>
+        </tr>
+        <tr>
+            <th>Cantidadpreguntas</th>
+            <td>{{ entity.cantidadPreguntas }}</td>
+        </tr>
+        <tr>
+            <th>Numeropreguntas</th>
+            <td>{{ entity.numeroPreguntas }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('grupo') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('grupo_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('grupo_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

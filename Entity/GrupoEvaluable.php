@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Itsur\AeiBundle\Entity\iEvaluable;
 use Itsur\AeiBundle\Entity\TemaEvaluable;
 use Itsur\AeiBundle\Entity\PreguntaEvaluable;
+use \Itsur\AeiBundle\Entity\GrupoPeriodo;
 
 /**
  * Itsur\AeiBundle\Entity\GrupoEvaluable
@@ -244,15 +245,15 @@ class GrupoEvaluable  implements iEvaluable
      *Crea las PreguntaEvalubles del GrupoEvaluable
      *
      */
-    public function crearPreguntas(){
+    public function crearPreguntas(\Itsur\AeiBundle\Entity\GrupoPeriodo $grupoPeriodo){
         $posicion = 1;
 
-        foreach($this->getGrupo()->getPreguntas() as $pregunta =>$valor){
+        foreach($grupoPeriodo->getPreguntas() as $pregunta =>$preguntaPeriodo){
 
           $pe = new PreguntaEvaluable();
           $pe->setOrden($posicion);
           $pe->setGrupo($this);
-          $pe->setPregunta($valor);
+          $pe->setPregunta($preguntaPeriodo->getPregunta());
           //$pe->setCalificacion(0);
           $pe->setContestada(false);
           $posicion++;

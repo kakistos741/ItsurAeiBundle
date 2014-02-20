@@ -1,0 +1,30 @@
+
+{% block title %}
+    Manual
+{% endblock %}
+
+{% block body %}
+    <h1><Lista de Manuales/h1>
+    <table border="1">
+        <tr>
+            <th>Clave</th>
+            <th>Nombre</th>
+            <th>Puntaje Total</th>
+            <th>Puntaje Seleccion</th>
+            <th>Puntaje Diagnostico</th>
+            <th>Link</th>
+        </tr>
+        {% for manual in manuales %}
+            <tr>
+                <td>{{manual.clave}}</td>
+                <td>{{manual.nombre}}</td>
+                <td>{{manual.puntaje}}</td>
+                <td>{{manual.puntajeSeleccion}}</td>
+                <td>{{manual.puntajeDiagnostico}}</td>
+                <td> <a href="{{path('manual_show',{'clave':manual.clave} ) }}">A</a> </td>
+            </tr>
+        {% endfor %}
+            <tr>Numero de manuales {{noManuales}} </tr>
+    </table>
+
+{% endblock %}

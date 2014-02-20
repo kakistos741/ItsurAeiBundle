@@ -4,30 +4,72 @@
 {% endblock %}
 
 {% block body %}
-    <tr>
-        <td>
+   <header>
+   <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="desactivado">Evaluación</li>
+           <li class="desactivado">Fin</li>
+    </ul>
     <center>
-    <p class="titulos">nuevo aspirante</p>
+    <p class="subtitulos">Nuevo aspirante</p>
     <p class="instrucciones">Escribe los datos solicitados con letra mayúscula. Asegúrate de llenar todos los campos, </p>
     <p class="instrucciones">si tienes dudas en alguno de  ellos, levanta la mano y el aplicador se acercará a asesorarte.
  </p>
-    </td>
-    </tr>
-    <tr>
-    <td>
+   </header>
+   <div id="content">
+     <form action="{{ path('evaluacion_nuevo') }}" method="post" {{ form_enctype(form) }} class="instrucciones">
         <table align="center">
-          <td>
-           <img src="{{ asset('bundles/itsuraei/images/admision4.jpg') }}"/>
-          </td>
-          <td>
-             <form action="{{ path('evaluacion_nuevo') }}" method="post" {{ form_enctype(form) }}>
-                 {{ form_widget(form) }}
-                 <br/>
-                 <input type="submit" class="button verde" />
-             </form>
-          </td>
+         <tr>
+            <td align="right">{{ form_label(form.ficha) }}:</td>
+            <td align="left">{{ form_widget(form.ficha) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.nombre) }}:</td>
+            <td align="left">{{ form_widget(form.nombre) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.carrera) }}:</td>
+            <td align="left">{{ form_widget(form.carrera) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.lugarOrigen) }}:</td>
+            <td align="left">{{ form_widget(form.lugarOrigen) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.escuelaProcedencia) }}:</td>
+            <td align="left">{{ form_widget(form.escuelaProcedencia) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.bachillerato) }}:</td>
+            <td align="left">{{ form_widget(form.bachillerato) }}</td>
+         </tr>
+         <tr>
+            <td align="right">{{ form_label(form.genero) }}:</td>
+            <td align="left">{{ form_widget(form.genero) }}</td>
+         </tr>
+        <tr>
+            <td align="right">{{ form_label(form.fechaNacimiento) }}:</td>
+            <td align="left">{{ form_widget(form.fechaNacimiento) }}</td>
+         </tr>
+        <tr>
+            <td align="right">{{ form_label(form.promedioBachillerato) }}:</td>
+            <td align="left">{{ form_widget(form.promedioBachillerato) }}</td>
+         </tr>
+
+
         </table>
-    </td>
-    </tr>
-    </center>
+
+
+
+
+
+
+                
+                 <br/>
+                 <input type="submit" value="Guardar" class="button verde" />
+             </form>
+         
+    </div>
 {% endblock %}

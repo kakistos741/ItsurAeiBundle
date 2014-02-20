@@ -48,12 +48,27 @@
      <table align="center" border='1' bordercolor="#D6D8D6">
      <tr>
          <th bgcolor="#E9EBE9">
-             <p align="center" class="encabezadosNegro">área</p>
+             <p align="center" class="encabezadosNegro">Tema</p>
          </th>
          <th bgcolor="#E9EBE9">
              <p align="center" class="encabezadosNegro">Calificación</p>
          </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Promedios</p>
+         </th>
+    </tr>
          {% for area in aspirante.hoja.areas %}
+         <tr bgcolor="#E9EBE9">
+        <td>
+             <p align="center" class="encabezadosNegro">{{area.area.nombre}}</p>
+        </td>
+        <td>
+             <p align="center" class="encabezadosNegro">{{area.calificacion}}</p>
+        </td>
+        <td>
+             
+        </td>
+     </tr>
          {% for seccion in area.secciones %}
              {% for tema in seccion.temas %}
                  <tr>
@@ -63,11 +78,20 @@
                     <td>
                           <p align="center" class="datosNegro">{{tema.calificacion}}</p>
                     </td>
+                    <td>
+                          <p align="center" class="datosNegro">{{ promediosTemas[ tema.tema.nombre ] }}</p>
+                    </td>
                   </tr>
               {% endfor %}
          {% endfor %}
          {% endfor %}
     </table>
+    
+    <br/>
+    {% for key, promedio in promediosTemas%}
+        {{key}} 
+    {%endfor %}
+
 
 
 {% endblock %}

@@ -4,24 +4,22 @@
 {% endblock %}
 
 {% block body %}
-    <tr>
-        <td>
-            <center>
-            <p align="center" class="titulos">sistema de evaluaci&oacute;n de nuevo ingreso ITSUR</p>
-            <br/>
-            <article>
-            <img src="{{ asset('bundles/itsuraei/images/evaluacion.png') }}"/><a href="{{ path('evaluacion_index') }}" class="button verde">
-                    Evaluaci&oacute;n de Ingreso.
-                 </a>
-            </article>
-            <br/>
-            <br/>
-            <article>
-            <img src="{{ asset('bundles/itsuraei/images/reporte.png') }}"/><a href="{{ path('admin_index') }}" class="button verde" >
-                     Secci&oacute;n de administraci&oacute;n
-                 </a>
-            </article>
-            </center>
-        </td>
-    </tr>
+    
+           <nav id="p_nav">
+		      <a href="{{ path('admin_index') }}" >Administraci&oacute;n&nbsp;&nbsp;</a>
+		   </nav>
+		   <div id="p_content">
+			   <header id="p_header">
+					SISTEMA DE EVALUACI&Oacute;N DE NUEVO INGRESO ITSUR
+			   </header>
+		       <a href="{{ path('evaluacion_index') }}" class="button" >
+                    Evaluación de ingreso
+               </a>
+		   </div>
+		   
+		   <footer id="p_footer">
+		   <p align="center">Se recomienda utilizar, Internet Explorer 10+, Firefox 10+ o Chrome 20+<p>
+		   </footer>
+		   	   
+            
 {% endblock %}

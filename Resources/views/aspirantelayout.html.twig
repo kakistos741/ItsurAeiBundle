@@ -3,29 +3,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
         <title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+           {% stylesheets '@ItsurAeiBundle/Resources/public/css/master.css'%}
+               <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+           {% endstylesheets%}
+        {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-        <link href="{{ asset('bundles/itsuraei/css/fuente.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('bundles/itsuraei/css/boton.css') }}" rel="stylesheet" type="text/css" />
+       
         <script type="text/JavaScript"></script>
     </head>
     <body>
-        <table width="960" border="0" align="center">
-            <tr>
-                <td><img src="{{ asset('bundles/itsuraei/images/encabezado.jpg') }}" width="952" height="200" /></td>
-            </tr>
-            <tr>
-                <td><p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p></td>
-            </tr>
-            <tr>
-            <td><table align="center">
-               <td><p align="left" class="etiquetas"> Ficha:</p></td>
-               <td><p align="left" class="preguntas">{{aspirante.ficha}}</p></td>
-               <td><p align="left" class="etiquetas">Nombre: </p></td>
-               <td><p align="left" class="preguntas">{{aspirante.nombre}}</p></td>
-            </table> </td>
-            </tr>
-        </table>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

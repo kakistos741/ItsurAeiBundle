@@ -38,6 +38,15 @@ class Tema
      */
     protected $puntaje;
     
+
+    /**
+     * @var integer $numeroGrupos
+     *
+     * @ORM\Column(name="numeroGrupos", type="integer", nullable="false")
+     */
+    protected $numeroGrupos;
+
+
     /**
      *
      * @ORM\ManyToOne(targetEntity="Seccion",inversedBy="temas")
@@ -107,6 +116,27 @@ class Tema
     public function getPuntaje()
     {
         return $this->puntaje;
+    }
+
+
+    /**
+     * Set numeroGrupos
+     *
+     * @param integer $numeroGrupos
+     */
+    public function setNumeroGrupos($numeroGrupos)
+    {
+        $this->numeroGrupos = $numeroGrupos;
+    }
+
+    /**
+     * Get numeroGrupos
+     *
+     * @return integer
+     */
+    public function getNumeroGrupos()
+    {
+        return $this->numeroGrupos;
     }
     
 

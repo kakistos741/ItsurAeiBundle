@@ -1,0 +1,30 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Manual del Periodo
+{% endblock %}
+
+{% block body %}
+   <h1>Información del Area</h1> 
+    <br/>
+    Manual: {{areaperiodo.manual.manual.nombre}}
+    <br/>
+    Nombre: {{areaperiodo.area.nombre}}
+    <br/>
+    Puntaje: {{areaperiodo.area.puntaje}}
+    <br/>
+    Puntaje Diagnostico: {{areaperiodo.area.puntajeDiagnostico}}
+    <br/>
+    Puntaje Selección: {{areaperiodo.area.puntajeSeleccion}}
+    <br/>
+    Tiempo: {{areaperiodo.area.tiempo}}
+    <br/>
+    <br/>
+    Secciones
+    <br/>
+    <br/>
+    {% for seccion in areaperiodo.secciones %}
+        <a href="{{ path('seccion_periodo_show', {'seccion':seccion.id} ) }}"> {{seccion.seccion.nombre}} {{seccion.seccion.intension}} </a>
+        <br/>
+    {% endfor %}
+
+{% endblock %}

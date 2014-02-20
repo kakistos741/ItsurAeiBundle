@@ -10,118 +10,65 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Itsur\AeiBundle\Entity\Utilerias;
 
 /**
 * @Route("/admin")
 */
 class AdministracionController extends Controller
 {
+    
     /**
      * @Route("/", name="admin_index")
      * @Template()
      */
     public function indexAction()
     {
-
-        return $this->render('ItsurAeiBundle:Administracion:index.html.twig');
+        
+        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
+        return $this->render('ItsurAeiBundle:Administracion:index.html.twig',array('periodo'=>$periodoActual));
     }
-    
-
-    
 
     
     /**
-     * @Route("/areasaspirante", name="admin_areas_aspirante")
+     * @Route("/login", name="_aei_security_login")
      * @Template()
      */
-    public function areasAspiranteAction(Request $request)
+    public function loginAction()
     {
-        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
-
-        $form = $this->createFormBuilder()
-        ->add('ficha', 'integer')
-        ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            $data = $form->getData();
-            $ficha =  $data['ficha'];
-
-            //$periodo = $this->container->getParameter('periodo.actual');
-            $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
-
-            if($aspirante)
-            {
-                  return $this->render('ItsurAeiBundle:Administracion:areasaspirante.html.twig',
-                    array('aspirante'=> $aspirante,
-                         'periodo'=>$periodoActual,
-                    ));
-            }else
-            {
-                return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
-                    array('ficha'=> $ficha,
-                         'periodo'=>$periodoActual,
-                    ));
-            }
-
+        if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        } else {
+            $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
-        array(
-            'form'=> $form->createView(),
-            'periodo'=>$periodoActual,
-            'reporte'=>1,
-        ));
+        return $this->render(
+            'ItsurAeiBundle:Security:login.html.twig', 
+            array(
+            'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
+            'error'         => $error,
+            )
+        );
     }
-    
-    
+
     /**
-     * @Route("/temaspirante", name="admin_temas_aspirante")
-     * @Template()
+     * @Route("/login_check", name="_aei_security_check")
      */
-    public function temasAspiranteAction(Request $request)
+    public function securityCheckAction()
     {
-        $periodoActual = Utilerias::periodoActual($this->getDoctrine());
-
-        $form = $this->createFormBuilder()
-        ->add('ficha', 'integer')
-        ->getForm();
-
-        if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-
-            $data = $form->getData();
-            $ficha =  $data['ficha'];
-
-            //$periodo = $this->container->getParameter('periodo.actual');
-            $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
-            ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
-
-            if($aspirante)
-            {
-                  return $this->render('ItsurAeiBundle:Administracion:temasaspirante.html.twig',
-                    array('aspirante'=> $aspirante,
-                         'periodo'=>$periodoActual,
-                    ));
-            }else
-            {
-                return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
-                    array('ficha'=> $ficha,
-                         'periodo'=>$periodoActual,
-                    ));
-            }
-
-        }
-
-        return $this->render('ItsurAeiBundle:Administracion:solicitarficha.html.twig',
-        array(
-            'form'=> $form->createView(),
-            'periodo'=>$periodoActual,
-            'reporte'=>2,
-        ));
+        // The security layer will intercept this request
     }
+
+    /**
+     * @Route("/logout", name="_aei_security_logout")
+     */
+    public function logoutAction()
+    {
+        // The security layer will intercept this request
+    }
+
+
+    
 }
 
 

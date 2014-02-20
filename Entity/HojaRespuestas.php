@@ -8,6 +8,8 @@ use Itsur\AeiBundle\Entity\HojaRespuestas;
 use Itsur\AeiBundle\Entity\AreaEvaluable;
 use Itsur\AeiBundle\Entity\Aspirante;
 use Itsur\AeiBundle\Entity\Manual;
+use Itsur\AeiBundle\Entity\ManualPeriodo;
+use Itsur\AeiBundle\Entity\AreaPeriodo;
 
 /**
  * Itsur\AeiBundle\Entity\HojaRespuestas
@@ -378,14 +380,15 @@ class HojaRespuestas  implements iEvaluable
      /**
      * Crea las areas evaluables del objeto hoja.
      */
-    public function crearAreas(){
-      $posiciones = Utilerias::ordenAleatorio($this->getManual()->getAreas()->count());
+    public function crearAreas(\Itsur\AeiBundle\Entity\ManualPeriodo $manualPeriodo){
+      $posiciones = Utilerias::ordenAleatorio($manualPeriodo->getAreas()->count());
       $posicion = 0;
-      foreach($this->getManual()->getAreas() as $area =>$valor){
+
+      foreach($manualPeriodo->getAreas()as $area =>$areaPeriodo){
           $ae = new AreaEvaluable();
           $ae->setOrden($posiciones[$posicion]);
           $ae->setHoja($this);
-          $ae->setArea($valor);
+          $ae->setArea($areaPeriodo->getArea());
           $ae->setTiempo(0);
           $ae->setPuntaje(0);
           $ae->setCalificacion(0);
@@ -393,7 +396,7 @@ class HojaRespuestas  implements iEvaluable
           $posicion++;
           
           $this->addAreaEvaluable($ae);
-          $ae->crearSecciones();
+          $ae->crearSecciones($areaPeriodo);
 
       }
 

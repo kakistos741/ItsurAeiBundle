@@ -39,6 +39,26 @@ class Utilerias
            return $posiciones;
     }
 
+    public static function selecionarAleatorio($cantidad, $disponibles){
+           $posiciones = array();
+
+           
+           //Creamos el arreglo con ninguna pregunta seleccionada
+           for($contador = 0; $contador < $disponibles; $contador++){
+            $posiciones[$contador] = 0;
+           }
+
+           $seleccionados = 0;
+           while($seleccionados < $cantidad){
+                  $nuevo = rand(0,$disponibles-1);
+                  if($posiciones[$nuevo] == 0){
+                    $posiciones[$nuevo] = 1;
+                    $seleccionados ++;
+                  }
+           }
+           return $posiciones;
+    }
+
     public static function existeEn($numero, $arreglo ){
         foreach($arreglo as $a => $value){
             if($numero == $value){
@@ -121,5 +141,15 @@ class Utilerias
             $resultado['area'] = $area;
         }
         return $resultado;
+    }
+
+
+    public static function procesarResultadoFuncionResumen($datos, $claves, $valores){
+      $cantidad = count($datos);
+      $resultado = array();
+      for ($contador=0; $contador < $cantidad; $contador++) { 
+        $resultado[ $datos[$contador][$claves] ] = $datos[$contador][$valores];
+      }
+      return $resultado;
     }
 }

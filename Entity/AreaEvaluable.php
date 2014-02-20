@@ -8,12 +8,13 @@ use Itsur\AeiBundle\Entity\HojaRespuestas;
 use Itsur\AeiBundle\Entity\SeccionEvaluable;
 use Itsur\AeiBundle\Entity\Seccion;
 use Itsur\AeiBundle\Entity\Area;
+use Itsur\AeiBundle\Entity\AreaPeriodo;
 
 /**
  * Itsur\AeiBundle\Entity\AreaEvaluable
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Itsur\AeiBundle\Repository\AreaEvaluableRepository")
  */
 class AreaEvaluable  implements iEvaluable
 {
@@ -383,21 +384,22 @@ class AreaEvaluable  implements iEvaluable
         return $this->secciones;
     }
     
-    public function crearSecciones(){
+    public function crearSecciones(\Itsur\AeiBundle\Entity\AreaPeriodo $areaPeriodo){
         $posicion = 1;
-        foreach($this->getArea()->getSecciones() as $seccion =>$valor){
+
+        foreach($areaPeriodo->getSecciones() as $seccion =>$seccionPeriodo){
 
           $se = new SeccionEvaluable();
           $se->setOrden($posicion);
           $se->setArea($this);
-          $se->setSeccion($valor);
+          $se->setSeccion($seccionPeriodo->getSeccion());
           $se->setCalificacion(0);
           $se->setPuntaje(0);
           $se->setContestada(false);
           $posicion++;
 
           $this->addSeccionEvaluable($se);
-          $se->crearTemas();
+          $se->crearTemas($seccionPeriodo);
       }
 
     }

@@ -1,0 +1,45 @@
+<h1>Grupo list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Puntaje</th>
+            <th>Instrucciones</th>
+            <th>Caso</th>
+            <th>Cantidadpreguntas</th>
+            <th>Numeropreguntas</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('grupo_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.puntaje }}</td>
+            <td>{{ entity.instrucciones }}</td>
+            <td>{{ entity.caso }}</td>
+            <td>{{ entity.cantidadPreguntas }}</td>
+            <td>{{ entity.numeroPreguntas }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('grupo_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('grupo_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('grupo_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

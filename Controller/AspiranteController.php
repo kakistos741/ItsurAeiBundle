@@ -36,10 +36,22 @@ class AspiranteController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                $aspirante->setPeriodo($periodoActual);
-                $em->persist($aspirante);
-                $em->flush();
-                return $this->redirect($this->generateUrl('aspirante_sucess'));
+
+                $existeFicha = $em->getRepository('ItsurAeiBundle:Aspirante')->findByPeriodoAndFicha($periodoActual->getId(), $aspirante->getId());
+
+                if(is_null($existeFicha)){
+
+                   $aspirante->setPeriodo($periodoActual);
+                   $em->persist($aspirante);
+                   $em->flush();
+                   return $this->redirect($this->generateUrl('aspirante_sucess'));
+                   
+                }else{
+                    return $this->render('ItsurAeiBundle:Aspirante:yaexisteficha.html.twig',array(
+                        'aspirante'=> $aspirante,
+                        'periodo'=>$periodoActual,
+                    ));
+                }
             }
             
         }
@@ -161,11 +173,38 @@ class AspiranteController extends Controller
         $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
             ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
 
+        //PROMEDIOS Areas
+        $promediosAreas = $this->getDoctrine()->getRepository('ItsurAeiBundle:AreaEvaluable')
+            ->avegareAreasByPeriodo($periodoActual->getId());
+            
+         $promediosAreas = Utilerias::procesarResultadoFuncionResumen($promediosAreas,'area', 'promedio');
+
+
+        //Calificacion promedio
+        $calificacionPromedio = $this->getDoctrine()->getRepository('ItsurAeiBundle:HojaRespuestas')
+            ->averageCalificacionByPeriodo($periodoActual->getId());
+
+         //Calificacion diagnostico promedio
+        $diagnosticoPromedio = $this->getDoctrine()->getRepository('ItsurAeiBundle:HojaRespuestas')
+            ->averageCalificacionDiagnosticoByPeriodo($periodoActual->getId());
+
+
+        //Calificacion promedio
+        $seleccionPromedio = $this->getDoctrine()->getRepository('ItsurAeiBundle:HojaRespuestas')
+            ->averageCalificacionSeleccionByPeriodo($periodoActual->getId());
+   
+
+       
+
         if($aspirante)
         {
             return $this->render('ItsurAeiBundle:Aspirante:areasaspirante.html.twig',
             array('aspirante'=> $aspirante,
                'periodo'=>$periodoActual,
+               'promedioCalificaccion'=>$calificacionPromedio[0][1],
+               'diagnosticoCalificaccion'=>$diagnosticoPromedio[0][1],
+               'seleccionCalificaccion'=>$seleccionPromedio[0][1],
+               'promediosAreas'=>$promediosAreas,
             ));
         }else{
                 return $this->render('ItsurAeiBundle:Administracion:aspirantenoencontrado.html.twig',
@@ -194,11 +233,20 @@ class AspiranteController extends Controller
             $aspirante = $this->getDoctrine()->getRepository('ItsurAeiBundle:Aspirante')
             ->findByPeriodoAndFichaWithHoja($periodoActual->getId(), $ficha);
 
+
+            //Promedios Temas
+            $promediosTemas = $this->getDoctrine()->getRepository('ItsurAeiBundle:TemaEvaluable')
+            ->avegareTemasByPeriodo($periodoActual->getId());
+
+            $promediosTemas = Utilerias::procesarResultadoFuncionResumen($promediosTemas,'tema', 'promedio');
+
             if($aspirante)
             {
                   return $this->render('ItsurAeiBundle:Aspirante:temasaspirante.html.twig',
                     array('aspirante'=> $aspirante,
                          'periodo'=>$periodoActual,
+                         'promediosTemas'=>$promediosTemas,
+                         //'prueba'=>$promediosTemas[0]['tema'],
                     ));
             }else
             {

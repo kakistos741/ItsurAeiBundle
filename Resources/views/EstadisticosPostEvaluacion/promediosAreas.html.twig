@@ -1,0 +1,42 @@
+{% block title %}
+    Estadisticos
+{% endblock %}
+
+{% block body %}
+    <br/>
+    {{ periodo.anio}}  {{ periodo.semestre}} 
+    <br/>
+    Carrera Todas
+    <br/>
+    <br/>
+    <table border="1">
+    <tr>
+        <th>Area</th>
+        <th>Promedio</th>
+    </tr>
+
+       {% for area, promedio in promediosAreas %}
+            <tr>
+            <td>{{area}}</td>
+             <td>{{promedio}}</td>
+           </tr>
+       {% endfor %}
+    <br/>
+    Total aspirantes: {{total}}
+    <nav>
+     <strong>Carreras: </strong>
+     <a href="{{path('post_estadisticos_Areas') }}">Todas</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING.INDUSTRIAL'} ) }}">Industrial</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING. SISTEMAS'} ) }}">Sistemas</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING.GESTION'} ) }}">Gestion</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING.ELECTRONICA'} ) }}">Electronica</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING.INFORMATICA'} ) }}">Informatica</a> 
+     | 
+     <a href="{{path('post_estadisticos_Areas_carrera',{'carrera':'ING.AMBIENTAL'} ) }}">Ambiental</a>
+     </nav>
+{% endblock %}

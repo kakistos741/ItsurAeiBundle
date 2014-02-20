@@ -4,10 +4,20 @@
 {% endblock %}
 
 {% block body %}
+    <header>
+       <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="desactivado">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+        <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    </header>
     <tr>
         <td>
-            <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
-            <p align="center" class="subtitulos">Los siguientes aspirantes fueron encontrados</p>
+            
+            <p align="center" class="instrucciones">Los siguientes aspirantes fueron encontrados</p>
      <table align="center" border="1" bordercolor="#D6D8D6">
      <tr>
          <th bgcolor="#E9EBE9">
@@ -41,15 +51,15 @@
     {% else %}
         <tr>
             <p align="center"> <img src="{{ asset('bundles/itsuraei/images/error.png') }}"/></p>
-            <p class="advertencia">No se encontraron aspirantes.</p>
+            <p align="center" class="advertencia">No se encontraron aspirantes.</p>
         </tr>
     {% endfor %}
     </table>
     <br/>
     <br/>
     <center>
-     <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
-        ir a Identificación
+     <a href="{{ path('evaluacion_identificacion') }}" class="button">
+        Regresar
     </a>
     </center>
     <br/>

@@ -34,5 +34,81 @@ class HojaRespuestasRepository extends EntityRepository
         }
 
     }
+
+    public function averageCalificacionByPeriodo($periodo)
+    {
+       $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  AVG(ho.calificacion) FROM ItsurAeiBundle:HojaRespuestas ho
+            JOIN ho.aspirante as asp
+            JOIN ho.periodo as pe
+            WHERE
+            pe.id = :periodo'
+        )
+        ->setParameter('periodo', $periodo);
+        try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function desviationCalificacionByPeriodo($periodo)
+    {
+       $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  STD(ho.calificacion) FROM ItsurAeiBundle:HojaRespuestas ho
+            JOIN ho.aspirante as asp
+            JOIN ho.periodo as pe
+            WHERE
+            pe.id = :periodo'
+        )
+        ->setParameter('periodo', $periodo);
+        try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function averageCalificacionDiagnosticoByPeriodo($periodo)
+    {
+       $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  AVG(ho.calificacionDiagnostico) FROM ItsurAeiBundle:HojaRespuestas ho
+            JOIN ho.aspirante as asp
+            JOIN ho.periodo as pe
+            WHERE
+            pe.id = :periodo'
+        )
+        ->setParameter('periodo', $periodo);
+        try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
+
+    public function averageCalificacionSeleccionByPeriodo($periodo)
+    {
+       $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  AVG(ho.calificacionSeleccion) FROM ItsurAeiBundle:HojaRespuestas ho
+            JOIN ho.aspirante as asp
+            JOIN ho.periodo as pe
+            WHERE
+            pe.id = :periodo'
+        )
+        ->setParameter('periodo', $periodo);
+        try {
+        return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+           return null;
+        }
+
+    }
 }
 ?>

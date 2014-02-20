@@ -3,72 +3,166 @@
     Evaluación
 {% endblock %}
 
+ {% block stylesheets %}
+     {{ parent() }}
+    {% stylesheets '@ItsurAeiBundle/Resources/public/css/menu.css'%}
+         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets%}
+ {% endblock %}
+
+{% block javascripts %}
+        {{ parent() }}
+        
+        {% javascripts  '@ItsurAeiBundle/Resources/public/js/jquery.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+         
+         <script type="text/javascript">
+         
+
+          $(document).ready(function(){
+               var alto = $(window).height()-140;
+               var acho = $(window).width()-60;
+                              
+               $("#adm_content").height(alto);
+               $("#adm_content").width(acho);
+               $("#reports").height(alto);
+               $("#reports").width(acho);
+               
+              
+
+
+              });
+
+        
+
+       
+
+         </script>
+    
+       
+{% endblock %}
+
 {%block body %}
 
-     
- 
-      <p align="center" class="titulos"> Bienvenido a la sección de administración</p>
-   
-            <a href="{{ path('periodo_list') }}" class="button verde">
-               Periodos
-            </a><br />
+     <header id="adm_header">
+     <center>
+      <span class="subtitulos"> Panel de administración</span></br>
+      <span class="instrucciones">  Periodo : {{ periodo.semestre}} {{ periodo.anio}} </span>
+      </center> 
+     </header>
+
+     <div id="menu">
+    
+     <ul class="menu">
+
+
         
-             <a href="{{ path('aspirante_list',{'carrera':'TODAS','order':'uor'} ) }}" class="button verde">
-                 Catalogo de aspirantes
-             </a><br />
 
-             <a href="{{ path('manual_list') }}" class="button verde">
-                 Lista de manuales
-             </a><br />
+         <li><a href="#" class="parent"><span>Principal</span></a> 
+            <ul>
+             <li><a href="{{ path('periodo_list') }}" target="reports" class="parent" ><span>Periodos</span> </a>
+                 <ul>
+                   <li><a href="{{ path('periodo_new') }}"  target="reports"  ><span>Nuevo periodo</span></a></li>
 
-             <a href="{{ path('configuracion_cambiar') }}" class="button verde">
-                 Configuración
-             </a><br />
+                 </ul>
+             </li>
+             <li> <a href="{{ path('aspirante_list',{'carrera':'TODAS','order':'uor'} ) }}" target="reports" ><span>Aspirantes</span> </a></li>
+             
+             <li><a href="{{ path('configuracion_cambiar') }}"  target="reports" ><span>Configuraciones</span> </a></li> 
+             </ul>       
+         </li>
 
-  <h1>Reportes Pre Evaluación</h1>
-  <br/>
-  <a href="{{ path('listado_aspirantes') }}" class="button verde">
-                Listado de Aspirantes
-            </a><br />
-  
-  <a href="{{path('pre_estadisticos_carreras') }}">Carreras</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_lugarorigen') }}">Lugar de origen</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_escuelaprocedencia') }}">Escuela de procedencia</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_bachillerato') }}">Bachillerato</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_genero') }}">Genero</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_promediobachillerato') }}">Promedio Bachillerato</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_preferencia_generos_carreras') }}">Preferencia de carrera por genero</a>
-  <br/>
-  <a href="{{path('pre_estadisticos_preferencia_bachillerato_carreras') }}">Preferencia de carrera por bachillerato</a>
+          <li><a href="#" class="parent"><span>Examen admisión</span></a>
+            <ul>
+              <li> <a href="#"  class="parent"><span>Manuales</span></a>
+                <ul>
+                    <li><a href="{{ path('manual_list') }}"  target="reports"><span>Listar</span></a></li>
+                    <li><a href="{{ path('manual_new') }}"  target="reports"><span>Nuevo</span></a></li>
+                </ul>
+              </li>
+                   <li> <a href="#"  class="parent"><span>Seccion</span></a>
+                <ul>
+                    <li><a href="{{ path('seccion') }}"  target="reports"><span>Listar</span></a></li>
+                    <li><a href="{{ path('seccion_news') }}"  target="reports"><span>Nuevo</span></a></li>
+                </ul>
+              </li>   
+              </li>
+                   <li> <a href="#"  class="parent"><span>Tema</span></a>
+                <ul>
+                    <li><a href="{{ path('tema') }}"  target="reports"><span>Listar</span></a></li>
+                    <li><a href="{{ path('tema_new') }}"  target="reports"><span>Nuevo</span></a></li>
+                </ul>
+              </li>  
+              </li>
+                   <li> <a href="#"  class="parent"><span>Grupo</span></a>
+                <ul>
+                    <li><a href="{{ path('grupo') }}"  target="reports"><span>Listar</span></a></li>
+                    <li><a href="{{ path('grupo_new') }}"  target="reports"><span>Nuevo</span></a></li>
+                </ul>
+              </li> 
+              </li>
+                   <li> <a href="#"  class="parent"><span>Pregunta</span></a>
+                <ul>
+                    <li><a href="{{ path('pregunta') }}"  target="reports"><span>Listar</span></a></li>
+                    <li><a href="{{ path('pregunta_new') }}"  target="reports"><span>Nuevo</span></a></li>
+                </ul>
+              </li>          
+            
+            </ul>  
+
+         </li>
+
+         <li><a href="#" class="parent"><span>Pre-evaluacion</span></a> 
+            <ul>
+              <li><a href="{{path('pre_estadisticos_carreras') }}" target="reports" ><span>Carreras</span> </a></li>
+              <li> <a href="{{path('pre_estadisticos_lugarorigen') }}" target="reports" ><span>Lugar de origen</span> </a></li>
+              <li><a href="{{path('pre_estadisticos_escuelaprocedencia') }}" target="reports" ><span>Escuela de procedencia</span> </a></li>
+              <li> <a href="{{path('pre_estadisticos_bachillerato') }}" target="reports" ><span>Bachillerato</span> </a></li>
+              <li><a href="{{path('pre_estadisticos_genero') }}" target="reports" ><span>Genero</span> </a></li>
+              <li> <a href="{{path('pre_estadisticos_promediobachillerato') }}" target="reports" ><span>Promedio Bachillerato</span> </a></li>
+              <li> <a href="{{path('pre_estadisticos_preferencia_generos_carreras') }}" target="reports" ><span>Preferencia de carrera por genero</span> </a></li>
+              <li><a href="{{path('pre_estadisticos_preferencia_bachillerato_carreras') }}" target="reports" ><span>Preferencia de carrera por bachillerato</span> </a></li>
+            </ul>
+        </li>
 
 
-    <h1>Reportes Post Evaluación</h1>
-  
-  <a href="{{path('post_estadisticos_carreras') }}">Carreras</a>
-  <br/>
-  <a href="{{path('post_estadisticos_lugarorigen') }}">Lugar de origen</a>
-  <br/>
-  <a href="{{path('post_estadisticos_escuelaprocedencia') }}">Escuela de procedencia</a>
-  <br/>
-  <a href="{{path('post_estadisticos_bachillerato') }}">Bachillerato</a>
-  <br/>
-  <a href="{{path('post_estadisticos_genero') }}">Genero</a>
-  <br/>
-  <a href="{{path('post_estadisticos_promediobachillerato') }}">Promedio Bachillerato</a>
- 	<br/>
-  <a href="{{path('post_estadisticos_preferencia_generos_carreras') }}">Preferencia de carrera por genero</a>
-  <br/>
-  <a href="{{path('post_estadisticos_preferencia_bachillerato_carreras') }}">Preferencia de carrera por bachillerato</a>		
-		
-  <h1>Resultados de Evaluación</h1>	
-  <a href="{{ path('calificaciones_aspirantes') }}" class="button verde">
-                 Calificaciones de Aspirantes
-             </a>
-  <br/>
+        <li><a href="#" class="parent"><span>Post-evaluacion</span></a> 
+            <ul>
+                <li><a href="{{path('post_estadisticos_carreras') }}" target="reports"><span>Carreras</span></a></li>
+                <li>  <a href="{{path('post_estadisticos_lugarorigen') }}" target="reports"><span>Lugar de origen</span></a></li>
+                <li> <a href="{{path('post_estadisticos_escuelaprocedencia') }}" target="reports"><span>Escuela de procedencia</span></a></li>
+                <li><a href="{{path('post_estadisticos_bachillerato') }}" target="reports"><span>Bachillerato</span></a></li>
+                <li><a href="{{path('post_estadisticos_genero') }}" target="reports"><span>Genero</span></a></li>
+                <li><a href="{{path('post_estadisticos_promediobachillerato') }}" target="reports"><span>Promedio Bachillerato</span></a></li>
+                <li><a href="{{path('post_estadisticos_preferencia_generos_carreras') }}" target="reports"><span>Preferencia de carrera por genero</span></a></li>
+                <li><a href="{{path('post_estadisticos_preferencia_bachillerato_carreras') }}" target="reports"><span>Preferencia de carrera por bachillerato</span></a></li>                             
+           </ul>
+        </li>
+
+        <li><a href="#" class="parent"><span>Resultados evaluacion</span></a> 
+            <ul>
+               <li><a href="{{path('post_estadisticos_matematicas') }}" target="reports"><span>Matematicas</span></a></li>
+              <li><a href="{{path('post_estadisticos_Areas',{'carrera':'ING.INDUSTRIAL'} ) }}" target="reports"><span>Estadisticos Areas</span></a></li>
+              <li><a href="{{path('post_estadisticos_Temas') }}" target="reports"><span>Estadisticos Temas</span></a></li> 
+              <li><a href="{{path('calificaciones_cuartiles_aspirantes') }}" target="reports"><span>Calificaciones en Cuartiles</span></a></li> 
+              <li><a href="{{ path('calificaciones_aspirantes') }}" target="reports"><span>Calificaciones de Aspirantes</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#" class="parent"><span>Ayuda</span></a></li>           
+                       
+      </ul>
+
+       <a href="{{ path('_aei_security_logout') }}" ><span>Salir</span></a><br />
+     </div>
+
+    
+    <div id="adm_content">
+       <iframe id="reports" name="reports" scrolling="auto" frameborder="0" >
+      
+           <p>Tu navegador no soporta frames</p>
+    
+      </iframe>
+   </div> 
+   
 {% endblock %}

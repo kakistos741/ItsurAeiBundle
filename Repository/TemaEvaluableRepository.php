@@ -4,6 +4,7 @@
 namespace Itsur\AeiBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 /**
  * GrupoEvalubleRepository
@@ -43,6 +44,147 @@ class TemaEvaluableRepository extends EntityRepository
             return null;
         }
 
+    }
+
+    public function avegareTemasByPeriodo($periodo)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, AVG(te.calificacion) as promedio
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            WHERE  
+              p.id = :periodo
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function minimumTemasByPeriodo($periodo)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, MIN(te.calificacion) as minimo
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            WHERE  
+              p.id = :periodo
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function maximumTemasByPeriodo($periodo)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, MAX(te.calificacion) as maximo
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            WHERE  
+              p.id = :periodo
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function avegareTemasByPeriodoAndCarrera($periodo, $carrera)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, AVG(te.calificacion) as promedio
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            JOIN h.aspirante as asp
+            WHERE  
+              p.id = :periodo
+              AND asp.carrera = :carrera
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo)
+        ->setParameter('carrera', $carrera);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function minimumTemasByPeriodoAndCarrera($periodo, $carrera)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, MIN(te.calificacion) as minimo
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            JOIN h.aspirante as asp
+            WHERE  
+              p.id = :periodo
+              AND asp.carrera = :carrera
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo)
+        ->setParameter('carrera', $carrera);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function maximumTemasByPeriodoAndCarrera($periodo, $carrera)
+    {
+      $query = $this->getEntityManager()
+        ->createQuery('
+            SELECT  t.nombre as tema, MAX(te.calificacion) as maximo
+            FROM ItsurAeiBundle:TemaEvaluable te
+            JOIN te.seccion se
+            JOIN se.area ae
+            JOIN te.tema as t
+            JOIN ae.hoja  as h
+            JOIN h.periodo as p
+            JOIN h.aspirante as asp
+            WHERE  
+              p.id = :periodo
+              AND asp.carrera = :carrera
+            GROUP BY t.nombre'
+        )->setParameter('periodo', $periodo)
+        ->setParameter('carrera', $carrera);
+        try {
+            return $query->getResult(Query::HYDRATE_SCALAR);
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
     }
 }
 ?>

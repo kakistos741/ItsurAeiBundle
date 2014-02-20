@@ -1,8 +1,76 @@
-{% block title %}
-    Estadisticos
+{% extends 'ItsurAeiBundle::estalayout.html.twig' %}
+
+{% block title %}    
+     Estadisticos
 {% endblock %}
 
+
+{% block javascripts %}
+         {{ parent() }}
+	
+		
+     <script type="text/javascript">
+		$(function () {
+		var chart;
+		$(document).ready(function() {
+			chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'container',
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false
+				},
+				title: {
+					text: 'Generos para la carrera de {{carrera}} '
+				},
+				subtitle: {
+                   text: 'Total de aspirantes: {{total}}'
+               },
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+					percentageDecimals: 2 
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							color: '#000000',
+							connectorColor: '#000000',
+							formatter: function() {
+								return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' %';
+							}
+							
+						}
+					}
+				},
+				series: [{
+					type: 'pie',
+					name: 'Porcentaje',
+					data: [
+					
+					{% for dato in datos %}
+                    ['{{dato.genero}}', {{dato.cantidad}}],
+	                {% endfor %}						
+					]
+					
+				}]
+			});
+		});
+		
+	});
+
+    </script>
+			
+   
+{% endblock%}
+
 {% block body %}
+   
+   
+    
+   <div id="container" style="min-width: 400px; height: 500px; margin: 0 auto"></div>
     <br/>
     {{ periodo.anio}}  {{ periodo.semestre}} 
     <br/>

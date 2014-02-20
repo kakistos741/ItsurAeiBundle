@@ -1,0 +1,144 @@
+body
+{
+  margin: 0px 0px 0px 0px;
+  background-color: #D8D8D8;
+}
+
+header
+{
+  width: 100%;
+  height: 60px;
+  text-align: center;
+
+}
+
+
+span
+{
+  display: inline-block;
+  text-align: center;
+
+}
+
+.inicio
+{
+
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#4ff508), to(#035403));
+    background: -moz-linear-gradient(top, #4ff508, #035403);
+    width: 50px;
+    height: 30px;
+    border-radius: 10px 0px 0px 10px;
+    border: 1px solid #D8D8D8;
+    box-shadow: 0px 1px 2px #D8D8D8;
+    
+ }
+
+ .fin
+{
+
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#4ff508), to(#035403));
+    background: -moz-linear-gradient(top, #4ff508, #035403);
+    width: 50px;
+    height: 30px;
+    border-radius: 0px 10px 10px 0px;
+     border: 1px solid #D8D8D8;
+     box-shadow: 0px 1px 2px ##D8D8D8;
+    
+ }
+
+
+ .activo
+ {
+    
+     background: -webkit-gradient(linear, 0 0, 0 100%, from(#4ff508), to(#035403));
+     background: -moz-linear-gradient(top, #4ff508, #035403);
+    border: 1px solid #D8D8D8;
+    box-shadow: 0px 1px 2px #D8D8D8;
+     width: 30px;
+     height: 30px;
+
+    
+ }
+
+ .desactivado
+ {
+    box-shadow: 0px 1px 2px #D8D8D8;
+    border: 1px solid #D8D8D8;
+    background-color:  #E6E6E6;
+    width: 30px;
+    height: 30px;
+
+    
+ }
+
+ .eva
+{
+  font-family:tahoma;
+  font-size:14px; 
+  font-weight: bold;
+}
+
+.titulos
+{
+  font-family:Georgia;
+  font-size: 22px; 
+  font-weight: bold;
+}
+
+.subtitulos
+{
+  font-family:Georgia;
+  font-size: 18px; 
+  font-weight: bold;
+}
+
+.otros
+{
+  font-family:Georgia;
+  font-size: 18px; 
+}
+
+
+
+
+p.preguntas
+{
+  font-family:Georgia;
+  font-size: 16px;
+  font-weight: bold;
+  width: 1100px;
+  height: auto;
+  text-align: justify; 
+}
+
+
+
+.respuesta
+{
+  font-family:Georgia;
+  font-size: 16px;
+  width: 270px;
+}
+
+
+.button
+{
+  font-family: Georgia;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 9px #454145;
+  -moz-box-shadow: 0px 1px 9px #454145;
+  box-shadow: 0px 1px 9px #454145;
+  text-shadow: 2px 1px 0px #575057;
+   background: -webkit-gradient(linear, 0 0, 0 100%, from(#4ff508), to(#035403));
+  background: -moz-linear-gradient(top, #4ff508, #035403);
+  border:0px;
+  cursor: pointer;
+}

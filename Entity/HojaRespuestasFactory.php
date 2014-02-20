@@ -31,24 +31,21 @@ class HojaRespuestasFactory
      * Create a HojaRespuetas with random order in his elements.
      *
      */
-    public static function getHojaRespuestas($claveManual, $doctrine){
+    public static function getHojaRespuestas($periodo, $doctrine){
          $fabrica = new HojaRespuestasFactory();
-         $hoja = $fabrica->crearHoja($claveManual, $doctrine);
+         $hoja = $fabrica->crearHoja($periodo->getManual(), $doctrine);
          return $hoja;
     }//End getHojaRespuestas($entityManager)
 
-    private function crearHoja($claveManual, $doctrine){
+    private function crearHoja($manualPeriodo, $doctrine){
             //Construir el objeto Hoja de Respuestas
         $this->hoja = new HojaRespuestas();
-        //Recupear el manual que contiene las preguntas
-        $manual = $doctrine->getRepository('ItsurAeiBundle:Manual')
-         ->findOneByClave($claveManual);
-         
+
         //Se asgina el manual a la Hoja de respuestas
-        $this->hoja->setManual($manual);
+        $this->hoja->setManual($manualPeriodo->getManual());
 
         //Creamos las areas de la hoja
-        $this->hoja->crearAreas();
+        $this->hoja->crearAreas($manualPeriodo);
         //Regresamos la hoja de respuestas creada
         return $this->hoja;
 

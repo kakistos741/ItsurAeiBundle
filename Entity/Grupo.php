@@ -52,6 +52,15 @@ class Grupo
      */
     protected $cantidadPreguntas;
 
+
+    /**
+     * @var integer $numeroPreguntas
+     *
+     * @ORM\Column(name="numeroPreguntas", type="integer")
+     */
+    protected $numeroPreguntas;
+    
+
      /**
      * @ORM\ManyToOne(targetEntity="Tema",inversedBy="grupos")
      * @ORM\JoinColumn(name="tema_id", referencedColumnName="id")
@@ -198,5 +207,25 @@ class Grupo
     public function getPreguntas()
     {
         return $this->preguntas;
+    }
+
+    /**
+     * Set numeroPreguntas
+     *
+     * @param integer $numeroPreguntas
+     */
+    public function setNumeroPreguntas($numeroPreguntas)
+    {
+        $this->numeroPreguntas = $numeroPreguntas;
+    }
+
+    /**
+     * Get numeroPreguntas
+     *
+     * @return integer
+     */
+    public function getNumeroPreguntas()
+    {
+        return $this->numeroPreguntas;
     }
 }

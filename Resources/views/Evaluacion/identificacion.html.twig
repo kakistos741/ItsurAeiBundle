@@ -3,34 +3,52 @@
     Evaluaci&oacute;n
 {% endblock %}
 {% block body %}
-    <tr>
-        <td>
+    <header>
+       <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="desactivado">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
         <center>
-            <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
-            <p align="center" class="advertencia">Identificaci&oacute;n</p>
-            <p align="center" class="instrucciones">Escribe tu número de ficha en la casilla correspondiente. Verifica que tus datos son los correctos,</p>
-            <p align="center" class="instrucciones"> si no es así, favor de levantar la mano y solicitar asesoría desde tu lugar al aplicador.</p>
-            <table>
-                   <td><p><img src="{{ asset('bundles/itsuraei/images/admision4.jpg') }}"/></p></td>
-                   <td>
-                       <form action="{{ path('evaluacion_identificacion') }}" method="post" class="etiquetas">
+            <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>           
+         </center>   
+    </header>
+    <div id="content">
+             </br>
+            <p align="center" class="advertencia">Identificación</p>
+            <p class="instrucciones">En el siguiente cuadro escribe el numero de tu ficha, y el nombre del aplicador, para continuar con el proceso. </p>
+             
+                  
+                       <form action="{{ path('evaluacion_identificacion') }}" method="post" class="instrucciones" >
                              {{ form_enctype(form) }}
-                             {{ form_widget(form) }}
-                       <br/>
-                       <br/>
-                   </td>
-            </table>
-            <input type="submit" class="button verde" />
-            <br/>
-            <br/>
-            <a href="{{ path('evaluacion_nuevo') }} "class="button verde">
-                Nueva ficha
-            </a>
-            <a href="{{ path('evaluacion_buscar') }}" class="button verde">
-                Buscar ficha
-            </a>
+
+                            <table align="center">
+                            <tr>
+                                <td align="right"> {{ form_label(form.ficha) }} : </td>
+                                 <td align="left">{{ form_widget(form.ficha) }}</td>
+                            </tr> 
+                            <tr>
+                                <td align="right"> {{ form_label(form.aplicador) }} : </td>
+                            
+                                <td align="left">{{ form_widget(form.aplicador) }}</td>
+                            </tr>
+                            </table>
+                    
+                             </br>
+                            <input id="submit"  type="submit" value="Siguiente" class="button"  />
+           
+          
+           
+             
             </form>
-        </center>
-        </td>
-    </tr>
+            </br>
+            </br>
+             <p>Si no recuerdas tu número de ficha, da click <a href="{{ path('evaluacion_buscar') }} ">aquí</a> para buscar.</p>
+             <p>En caso de que no te encuentre registrado, da click <a href="{{ path('evaluacion_nuevo') }}" >aquí</a> para darte de alta.</p>
+     </div>       
+           
+        
+     
 {% endblock %}

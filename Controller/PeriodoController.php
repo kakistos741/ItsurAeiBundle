@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Itsur\AeiBundle\Entity\Periodo;
 use Itsur\AeiBundle\Form\PeriodoType;
+use Itsur\AeiBundle\Entity\ManualPeriodo;
+use Itsur\AeiBundle\Entity\ManualPeriodoFactory;
+use Itsur\AeiBundle\Entity\Utilerias;
 
 /**
  * @Route("/admin/periodo")
@@ -126,6 +129,30 @@ class PeriodoController extends Controller
         $em->remove($periodo);
         $em->flush();
         return new Response('Periodo eliminado'. $id);
+    }
+
+    /**
+     * @Route("/createmanual/{id}", name="periodo_create_manual")
+     * @Template()
+     */
+    public function createManualAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $periodo = $em->getRepository('ItsurAeiBundle:Periodo')->find($id);
+
+        $manual = Utilerias::manualActual($this->getDoctrine());
+        
+        $manualPeriodo = ManualPeriodoFactory::getManualPeriodo($manual->getClave(), $this->getDoctrine());
+
+        $manualPeriodo->setPeriodo($periodo);
+        $periodo->setManual($manualPeriodo);
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($manualPeriodo);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('periodo_list'));
+        
     }
     
 }

@@ -1,0 +1,72 @@
+{% extends 'ItsurAeiBundle::adminlayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <p class="titulosNegro" align="center">Reporte de Calificaciones</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p class="subtitulosNegro" align="center">Carrera:  {{ carrera }}</p>
+     <br/>
+     <br/>
+     <nav>
+     <strong>Carreras: </strong>
+     <a href="{{path('calificaciones_cuartiles_aspirantes') }}">Todas</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING.INDUSTRIAL'} ) }}">Industrial</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING. SISTEMAS'} ) }}">Sistemas</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING.GESTION'} ) }}">Gestion</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING.ELECTRONICA'} ) }}">Electronica</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING.INFORMATICA'} ) }}">Informatica</a> 
+     | 
+     <a href="{{path('calificaciones_cuartiles_carrera_aspirantes',{'carrera':'ING.AMBIENTAL'} ) }}">Ambiental</a>
+     </nav>
+
+     <br/>
+     <br/>
+     Total aspirantes: {{total}}
+     <br/>
+
+     <table align="center" border=1>
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Nombre</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Fecha aplicación</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Calificación</p>
+         </th>
+         </th>
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.ficha}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.nombre}} </p>
+                </td>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.fecha.format('d-m-Y')}}</p>
+                </td>
+                 <td>
+                    <p align="center" class="datosNegro">{{aspirante.hoja.calificacion}} </p>
+                </td>
+    {% else %}
+        <tr>
+            <p align="center" class="advertencia">¡No se encontrarón aspirantes!.</p>
+        </tr>
+    {% endfor %}
+    </table>
+
+    
+{% endblock %}

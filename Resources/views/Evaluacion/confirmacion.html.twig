@@ -4,56 +4,63 @@
 {% endblock %}
 
 {% block body %}
-    <tr>
-    <td>
-    <p align="center" class="titulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
-    <p align="center" class="subtitulos">Confirmaci&oacute;n de datos.</p>
-    <table border=0 align="center">
-        <td>
-        <p align="left" class="etiquetas"> Ficha:</p>
+    <header>
+    <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="desactivado">Evaluación</li>
+           <li class="desactivado">Fin</li>
+    </ul>
+    <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+    <p align="center" class="instrucciones">Confirmaci&oacute;n de datos.</p>
+    </header>
+    <div id="content"
+    <table border="1" align="center">
+        <td align="rigth" >
+        <p class="confirmaText"> Ficha:</p>
         </td>
         <td>
-        <p align="left" class="preguntas">{{aspirante.ficha}}</p>
-        </td>
-        <tr>
-        <td>
-        <p align="left" class="etiquetas">Nombre: </p>
-        </td>
-        <td>
-        <p align="left" class="preguntas">{{aspirante.nombre}}</p>
-        </td>
-         <tr>
-        <td>
-        <p align="left" class="etiquetas">Lugar de Origen:</p>
-        </td>
-        <td>
-        <p align="left" class="preguntas">{{aspirante.lugarOrigen}}</p>
-        </td>
-         <tr>
-        <td>
-        <p align="left" class="etiquetas">Escuela de Procedencia:</p>
-        </td>
-        <td>
-        <p align="left" class="preguntas">{{aspirante.escuelaProcedencia}}</p>
+        <p class="instrucciones">{{aspirante.ficha}}</p>
         </td>
         <tr>
         <td>
-        <p align="left" class="etiquetas">Aplicador:</p>
+        <p  class="confirmaText">Nombre: </p>
         </td>
         <td>
-        <p align="left" class="preguntas">{{aplicador}}</p>
+        <p  class="instrucciones">{{aspirante.nombre}}</p>
+        </td>
+         <tr>
+        <td>
+        <p  class="confirmaText">Lugar de Origen:</p>
+        </td>
+        <td>
+        <p  class="instrucciones">{{aspirante.lugarOrigen}}</p>
+        </td>
+         <tr>
+        <td>
+        <p  class="confirmaText">Escuela de Procedencia:</p>
+        </td>
+        <td>
+        <p  class="instrucciones">{{aspirante.escuelaProcedencia}}</p>
+        </td>
+        <tr>
+        <td>
+        <p  class="confirmaText">Aplicador:</p>
+        </td>
+        <td>
+        <p class="instrucciones">{{aplicador}}</p>
         </td>
     </table>
     <br/>
     <br/>
     <center>
-            <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
-               regresar
-            </a>
-            <a href="{{ path('evaluacion_instrucciones',{ 'ficha':aspirante.ficha,'aplicador':aplicador })  }}" class="button verde">
+            <a href="{{ path('evaluacion_identificacion') }}" class="button">
+               Regresar
+            </a>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ path('evaluacion_instrucciones',{ 'ficha':aspirante.ficha,'aplicador':aplicador })  }}" class="button">
                Continuar
             </a>
     </center>
-            </td>
-    </tr>
+    </div>
 {% endblock %}

@@ -1,0 +1,49 @@
+<h1>Area</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ entity.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Puntaje</th>
+            <td>{{ entity.puntaje }}</td>
+        </tr>
+        <tr>
+            <th>Puntajediagnostico</th>
+            <td>{{ entity.puntajeDiagnostico }}</td>
+        </tr>
+        <tr>
+            <th>Puntajeseleccion</th>
+            <td>{{ entity.puntajeSeleccion }}</td>
+        </tr>
+        <tr>
+            <th>Tiempo</th>
+            <td>{{ entity.tiempo }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('area') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('area_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('area_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

@@ -4,8 +4,24 @@
 {% endblock %}
 
 {% block body %}
-    <tr>
-        <td>
+      <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="activo">Fin</li>
+        </ul>
+       <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+           
+           <table align="center">
+               <td><p align="left" class="confirmaText"> Ficha:</p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.ficha}}</p></td>
+               <td><p align="left" class="confirmaText">Nombre: </p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.nombre}}</p></td>
+            </table> 
+
+       </header>
            <p class="advertencia" align="center">¡Has Finalizado!</p>
            <br/>
            <p class="instrucciones" align="center"> Terminaste tu primera etapa del proceso de admisión para ser parte del ITSUR </p>
@@ -20,7 +36,7 @@
            </table>
            <center>
            <br/>
-           <a href="{{ path('evaluacion_finalizar') }}" class="button verde">
+           <a href="{{ path('evaluacion_finalizar') }}" class="button">
               Terminar
            </a>
            </td>

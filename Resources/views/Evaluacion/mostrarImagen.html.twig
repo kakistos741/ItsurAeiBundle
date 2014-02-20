@@ -1,10 +1,14 @@
 {% if desplegar %}
     {% if imagen %}
         {% if orientacion == 'izquierda' %}
-            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" align="left"> </img>
-        {% else %}
-            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" align="right"> </img>
+            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" > </img>
+        {% elseif orientacion == 'derecha' %}
+            <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" > </img>
+        {% elseif orientacion == 'centro' %}
+             <img src="{{ asset('bundles/itsuraei/images') }}{{imagen}}" align="middle"> </img>
         {% endif %}
+
+
     {% else %}
         <pre class="pregunta">{{imagen}}</pre>
     {% endif %}

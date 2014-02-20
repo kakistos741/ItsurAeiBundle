@@ -1,0 +1,24 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+{% block body %}
+ <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+      
+
+       </header>
+    <center>
+        <p class="advertencia">Ya existe un aspirante con este número de ficha.</p>
+        <br/>
+       <a href="{{ path('evaluacion_identificacion') }}" class="button">
+            Ir a identificacion</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+         
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'ItsurAeiBundle::adminlayout.html.twig' %}
+{% block title %}
+    Evaluación
+{% endblock %}
+
+{% block body %}
+    <p class="titulosNegro" align="center">Reporte de Calificaciones Matemáticas</p>
+    <p class="subtitulosNegro" align="center">Ciclo Escolar</p>
+    <p class="subtitulosNegro" align="center">{{ periodo.semestre }}  {{ periodo.anio }}</p>
+    
+    <nav>
+     <strong>Carreras: </strong>
+     <a href="{{path('post_estadisticos_matematicas') }}">Todas</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING.INDUSTRIAL'} ) }}">Industrial</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING. SISTEMAS'} ) }}">Sistemas</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING.GESTION'} ) }}">Gestion</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING.ELECTRONICA'} ) }}">Electronica</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING.INFORMATICA'} ) }}">Informatica</a> 
+     | 
+     <a href="{{path('post_estadisticos_matematicas_carrera',{'carrera':'ING.AMBIENTAL'} ) }}">Ambiental</a>
+     </nav>
+
+
+     <br/>
+     Total aspirantes: {{total}}
+     <br/>
+     <br/>
+     <table align="center" border=1>
+     <tr>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Ficha</p>
+         </th>
+         <th bgcolor="#E9EBE9">
+             <p align="center" class="encabezadosNegro">Nombre</p>
+         </th>
+         {% for seccion in nombresTemas[0].manual.areas[0].secciones %}
+            {% for tema in seccion.temas %}
+                <th bgcolor="#E9EBE9">
+                    <p align="center" class="encabezadosNegro">{{tema.nombre}}</p>
+                </th>
+            {% endfor %}
+         {% endfor %}
+     {% for aspirante in aspirantes %}
+            <tr>
+                <td>
+                    <p align="center" class="datosNegro">{{aspirante.ficha}} </p>
+                </td>
+                 <td>
+                    <p align="left" class="datosNegro">{{aspirante.nombre}} </p>
+                </td>
+                {% for area in aspirante.hoja.areas %}
+                    {% for seccion in area.secciones %}
+                        {% for tema in seccion.temas %}
+                            <td>
+                                <p align="center" class="datosNegro">{{tema.calificacion}}</p>
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            
+    {% else %}
+        <tr>
+            <p align="center" class="advertencia">¡No se encontrarón aspirantes!.</p>
+        </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+<h1>Nuevo manual</h1>
+
+<form action="{{ path('manual_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Agregar</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('manual_list') }}">
+            Regresar
+        </a>
+    </li>
+</ul>

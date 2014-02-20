@@ -7,6 +7,8 @@ use Itsur\AeiBundle\Entity\iEvaluable;
 use Itsur\AeiBundle\Entity\GrupoEvaluable;
 use Itsur\AeiBundle\Entity\SeccionEvaluable;
 use Itsur\AeiBundle\Entity\Tema;
+use \Itsur\AeiBundle\Entity\SeccionPeriodo;
+use \Itsur\AeiBundle\Entity\TemaPeriodo;
 
 /**
  * Itsur\AeiBundle\Entity\TemaEvaluable
@@ -240,23 +242,24 @@ class TemaEvaluable implements iEvaluable
      *Crea los GrupoEvalubles del TemaEvaluable
      *
      */
-    public function crearGrupos(){
-        $posiciones = Utilerias::ordenAleatorio($this->getTema()->getGrupos()->count());
+    public function crearGrupos(\Itsur\AeiBundle\Entity\TemaPeriodo $temaPeriodo){
+
+        $posiciones = Utilerias::ordenAleatorio($temaPeriodo->getGrupos()->count());
         $posicion = 0;
         
-        foreach($this->getTema()->getGrupos() as $grupo =>$valor){
+        foreach($temaPeriodo->getGrupos() as $grupo =>$grupoPeriodo){
 
           $ge = new GrupoEvaluable();
           $ge->setOrden($posiciones[$posicion]);
           $ge->setTema($this);
-          $ge->setGrupo($valor);
+          $ge->setGrupo($grupoPeriodo->getGrupo());
           $ge->setPuntaje(0);
           $ge->setCalificacion(0);
           $ge->setContestada(false);
           $posicion++;
           
           $this->addGrupoEvaluable($ge);
-          $ge->crearPreguntas();
+          $ge->crearPreguntas($grupoPeriodo);
         }
 
     }

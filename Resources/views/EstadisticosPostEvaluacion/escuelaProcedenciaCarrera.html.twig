@@ -1,8 +1,92 @@
+{% extends 'ItsurAeiBundle::estalayout.html.twig' %}
+
 {% block title %}
     Estadisticos
 {% endblock %}
 
+{% block javascripts %}
+         {{ parent() }}
+		
+     <script type="text/javascript">
+	$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'column',
+                margin: [ 50, 50, 170, 80]
+            },
+            title: {
+                text: 'Escuelas de procedencia para la carrera de {{carrera}}  {{ periodo.semestre}} {{ periodo.anio}}'
+            },
+			subtitle: {
+                   text: 'Total de aspirantes: {{total}}'
+				   },
+            xAxis: {
+                categories: [
+                    {% for dato in datos %}
+					'{{ dato.escuelaProcedencia}}',
+					{% endfor %}
+                ],
+                labels: {
+                    rotation: -45,
+                    align: 'right',
+                    style: {
+                        fontSize: '10px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Cantidad'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.x +'</b><br/>'+
+                        'Numero de aspirantes: '+ Highcharts.numberFormat(this.y, 1);
+                }
+            },
+            series: [{
+                name: 'Population',
+                data: [
+				{% for dato in datos %}
+					{{ dato.cantidad}},
+				{% endfor %}
+				
+				],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    x: 4,
+                    y: 10,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            }]
+        });
+    });
+    
+});
+
+   </script>
+			
+   
+{% endblock%}
+
 {% block body %}
+     
+   <div id="container" style="min-width: 400px; height: 600px; margin: 0 auto"></div>
     <br/>
     {{ periodo.anio}}  {{ periodo.semestre}} 
     <br/>

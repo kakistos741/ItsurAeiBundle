@@ -9,7 +9,7 @@ use Itsur\AeiBundle\Entity\Seccion;
  * Itsur\AeiBundle\Entity\Area
  *
  * @ORM\Table(name="Area")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Itsur\AeiBundle\Repository\AreaRepository")
  */
 class Area
 {

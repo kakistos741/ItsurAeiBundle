@@ -44,6 +44,13 @@ class Periodo
      * @ORM\OneToMany(targetEntity="Aspirante", mappedBy="periodo")
      */
     protected $aspirantes;
+
+
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="ManualPeriodo", mappedBy="periodo")
+     */
+    protected $manual;
     
     
 
@@ -119,5 +126,25 @@ class Periodo
     public function getAspirantes()
     {
         return $this->aspirantes;
+    }
+
+    /**
+     * Set manual
+     *
+     * @param Itsur\AeiBundle\Entity\ManualPeriodo $manual
+     */
+    public function setManual(ManualPeriodo $manual)
+    {
+        $this->manual = $manual;
+    }
+
+    /**
+     * Get manual
+     *
+     * @return Itsur\AeiBundle\Entity\ManualPeriodo 
+     */
+    public function getManual()
+    {
+        return $this->manual;
     }
 }

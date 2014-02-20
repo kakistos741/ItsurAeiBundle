@@ -1,19 +1,19 @@
 _aei_bienvenida:
     resource: "@ItsurAeiBundle/Controller/BienvenidaController.php"
     type:     annotation
-    
+
 _aei_evaluacion:
     resource: "@ItsurAeiBundle/Controller/EvaluacionController.php"
     type:     annotation
-    
+
 _aei_admin:
     resource: "@ItsurAeiBundle/Controller/AdministracionController.php"
     type:     annotation
-    
+
 _aei_admin_periodo:
     resource: "@ItsurAeiBundle/Controller/PeriodoController.php"
     type:     annotation
-    
+
 _aei_admin_aspirante:
     resource: "@ItsurAeiBundle/Controller/AspiranteController.php"
     type:     annotation
@@ -30,10 +30,34 @@ _aei_admin_manual:
     resource: "@ItsurAeiBundle/Controller/ManualController.php"
     type:     annotation
 
+_aei_admin_manual_periodo:
+    resource: "@ItsurAeiBundle/Controller/ManualPeriodoController.php"
+    type:     annotation
+
 _aei_admin_area:
     resource: "@ItsurAeiBundle/Controller/AreaController.php"
     type:     annotation
 
 _aei_admin_area:
     resource: "@ItsurAeiBundle/Controller/ParametroController.php"
+    type:     annotation
+
+_aei_admin_area:
+    resource: "@ItsurAeiBundle/Controller/UserController.php"
+    type:     annotation
+
+_aei_admin_pregunta:
+    resource: "@ItsurAeiBundle/Controller/PreguntaController.php"
+    type:     annotation
+
+_aei_admin_seccion:
+    resource: "@ItsurAeiBundle/Controller/SeccionController.php"
+    type:     annotation
+
+_aei_admin_grupo:
+    resource: "@ItsurAeiBundle/Controller/GrupoController.php"
+    type:     annotation
+
+_aei_admin_tema:
+    resource: "@ItsurAeiBundle/Controller/TemaController.php"
     type:     annotation

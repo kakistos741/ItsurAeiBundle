@@ -3,18 +3,33 @@
     Listado de periodos
 {% endblock %}
 
+
+{% block stylesheets %}
+        {{ parent() }}
+	    {% stylesheets '@ItsurAeiBundle/Resources/public/css/tables.css'%}
+			   <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+		{% endstylesheets%}
+		{% endblock %}
+
+
+
 {% block body %}
      
-	 <a href="{{ path('periodo_new') }}" >Nuevo periodo</a>
-    
-	<table border="1">
+	<center>
+    <p class="gralTitulos">Lista de manuales</p>
+    </center>
+    </br>
+	<table id="newspaper-a" border="1" align="center">
+	<thead>
 		<tr>
 		<th>Periodo</th>
 		<th>Año</th>
 		<th>Accion</th>
+		<th>Manual</th>
+		<th>Crear Manual</th>
 		</tr>
-		
-		
+	<thead>	
+	<tbody>	
 	{% for periodos in periodos %}
 	       <tr>
             <td>	
@@ -25,7 +40,14 @@
 			</td>
 			<td>
 			<a href="{{ path('periodo_update',{ 'id':periodos.id } ) }}" >Modificar</a>
-			
+			</td>
+			<td>
+			   {% if periodos.manual %}
+			      <a>{{periodos.manual.id}}</a>
+			   {% endif %}
+			</td>
+			<td>
+			   <a href="{{ path('periodo_create_manual',{ 'id':periodos.id } ) }}" >Crear Manual</a>
 			</td>
 	     </tr>
 	 {% else %}
@@ -35,7 +57,7 @@
 	  		</td>
 	     </tr>
      {% endfor %}
-
+    </tbody>
 	<table>
 
 {% endblock %}

@@ -1,16 +1,28 @@
-{% extends 'ItsurAeiBundle::aspirantelayout.html.twig' %}
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
 {% block title %}
     Evaluación
 {% endblock %}
 {% block body %}
+ <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+      
+
+       </header>
     <center>
         <p class="advertencia">Ya existe una evaluación previa para este número de ficha.</p>
         <br/>
-        <a href="{{ path('evaluacion_identificacion') }}" class="button verde">
-            Identificación
-        </a>
-        <a href="{{ path('evaluacion_reiniciar',{ 'ficha':aspirante.ficha,}) }}" class="button verde">
+       <a href="{{ path('evaluacion_identificacion') }}" class="button">
+      Ir a identificacion</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     
+                  <a href="{{ path('evaluacion_reiniciar',{ 'ficha':aspirante.ficha,}) }}" class="button">
             Reiniciar evaluación
         </a>
-    </center>
+
+         
 {% endblock %}

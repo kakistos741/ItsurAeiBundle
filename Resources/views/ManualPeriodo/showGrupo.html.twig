@@ -1,0 +1,35 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Grupo del Tema
+{% endblock %}
+
+{% block body %}
+   <h1>Información del Seccion</h1> 
+    <br/>
+    Seccion: {{grupoperiodo.tema.tema.nombre}}
+    <br/>
+    Puntaje: {{grupoperiodo.grupo.puntaje}}
+    <br/>
+    Instrucciones: {{grupoperiodo.grupo.instrucciones}}
+    <br/>
+    Caso: {{grupoperiodo.grupo.caso}}
+    <br/>
+    No. Preguntas: {{grupoperiodo.grupo.numeroPreguntas}}
+    <br/>
+    <br/>
+    Grupos
+    <br/>
+    <br/>
+    {% for pregunta in grupoperiodo.preguntas %}
+         {{pregunta.pregunta.sentencia}} 
+         {{pregunta.pregunta.objetivo}} 
+         {{pregunta.pregunta.imagen}} 
+         {{pregunta.pregunta.opcion1}}
+         {{pregunta.pregunta.opcion2}}
+         {{pregunta.pregunta.opcion3}}
+         {{pregunta.pregunta.opcion4}}
+         {{pregunta.pregunta.respuesta}}
+        <br/>
+    {% endfor %}
+
+{% endblock %}

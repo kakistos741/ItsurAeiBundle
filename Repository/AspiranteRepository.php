@@ -194,6 +194,44 @@ class AspiranteRepository extends EntityRepository
         }
     }
 
+    public function findAllOrderedCalificacionByPeriodoWithHoja($periodo)
+    {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p, h FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+            ORDER BY h.calificacion DESC"
+        )->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findAllOrderedCalificacionByPeriodoAndCarreraWithHoja($periodo, $carrera)
+    {
+
+        $query = $this->getEntityManager()
+        ->createQuery("
+            SELECT a, p, h FROM ItsurAeiBundle:Aspirante a
+            JOIN a.periodo p
+            JOIN a.hoja h
+            WHERE  p.id = :periodo
+                AND a.carrera = :carrera
+            ORDER BY h.calificacion DESC"
+        )->setParameter('carrera', $carrera)
+         ->setParameter('periodo', $periodo);
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function count($periodo)
     {
 

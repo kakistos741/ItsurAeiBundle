@@ -1,0 +1,26 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Seccion del Tema
+{% endblock %}
+
+{% block body %}
+   <h1>Información del Seccion</h1> 
+    <br/>
+    Seccion: {{temaperiodo.seccion.seccion.nombre}}
+    <br/>
+    Nombre: {{temaperiodo.tema.nombre}}
+    <br/>
+    Puntaje: {{temaperiodo.tema.puntaje}}
+    <br/>
+    Numero de Grupos: {{temaperiodo.tema.numeroGrupos}}
+    <br/>
+    <br/>
+    Grupos
+    <br/>
+    <br/>
+    {% for grupo in temaperiodo.grupos %}
+        <a href="{{ path('grupo_periodo_show', {'grupo':grupo.id} ) }}"> {{grupo.preguntas.count}} </a>
+        <br/>
+    {% endfor %}
+
+{% endblock %}

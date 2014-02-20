@@ -4,6 +4,24 @@
 {% endblock %}
 
 {% block body %}
+ <header>
+         <ul>
+           <li class="activo">Inicio</li>
+           <li class="activo">Políticas y directrices</li>
+           <li class="activo">Identificacion</li>
+           <li class="activo">Evaluación</li>
+           <li class="desactivado">Fin</li>
+        </ul>
+       <p align="center" class="subtitulos"> CICLO ESCOLAR: {{ periodo.semestre }}  {{ periodo.anio }}</p>
+           
+           <table align="center">
+               <td><p align="left" class="confirmaText"> Ficha:</p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.ficha}}</p></td>
+               <td><p align="left" class="confirmaText">Nombre: </p></td>
+               <td><p align="left" class="instrucciones"> {{aspirante.nombre}}</p></td>
+            </table> 
+
+       </header>
 <center>
 <table align="center" width="600">
 <tr>
@@ -13,39 +31,29 @@
 </tr>
 <tr>
     <td>
-     <p class="instrucciones" align="justify"> El examen se compone de 127 preguntas divididas en siete áreas de estudio, distribuidas de la siguiente manera:</p>
+     <p class="instrucciones" align="justify"> El examen se compone de 140 preguntas divididas en siete áreas de estudio, distribuidas de la siguiente manera:</p>
       <table>
         <td>
         <ul>
-           <li class="opciones" type="square">45	Matemáticas.</li>
-           <li class="opciones" type="square">10	Física.</li>
-           <li class="opciones" type="square">10	Química.</li>
-           <li class="opciones" type="square"> 9 Metodología y Taller de Lectura.</li>
-           <li class="opciones" type="square">11	Administración y Contabilidad.</li>
-           <li class="opciones" type="square">25	Informática.</li>
-           <li class="opciones" type="square">16	Inglés.</li>
+
+           <li class="opciones" type="square">Matemáticas.</li>
+           <li class="opciones" type="square">Comprensión de Lectura.</li>
+           <li class="opciones" type="square">Ortográfia y signos de puntuación.</li>
+           <li class="opciones" type="square">Metodología de la investigación.</li>
+           <li class="opciones" type="square">Física.</li>
+           <li class="opciones" type="square">Química.</li>
+           <li class="opciones" type="square">Biología.</li>
+           <li class="opciones" type="square">Programación.</li>
+           <li class="opciones" type="square">Matematicas discretas.</li>
+           <li class="opciones" type="square">Redes de Computaras.</li>
+           <li class="opciones" type="square">Probabilidad.</li>
+           <li class="opciones" type="square">Estádistica.</li>
+           <li class="opciones" type="square">Administración.</li>
+           <li class="opciones" type="square">Contabilidad.</li>
+
         </ul>
         </td>
       </table>
-    </td>
-    <tr>
-    <td>
-     <p class="instrucciones" align="justify"> El tiempo requerido para contestar el examen es de 120 min (2 horas).
-
-El tiempo sugerido para cada una de las áreas es de:</p>
-       <table>
-          <td>
-          <ul>
-           <li class="opciones" type="square">60 min.  Matemáticas.</li>
-           <li class="opciones" type="square">10 min.  Física.</li>
-           <li class="opciones" type="square">10 min.   Química.</li>
-           <li class="opciones" type="square">5 min.    Metodología y Taller de Lectura.</li>
-           <li class="opciones" type="square">10 min.  Administración y Contabilidad.</li>
-           <li class="opciones" type="square">15 min.   Informática.</li>
-           <li class="opciones" type="square">10 min.   Inglés</li>
-          </ul>
-          </td>
-       </table>
     </td>
     </tr>
     <tr>
@@ -67,9 +75,9 @@ El tiempo sugerido para cada una de las áreas es de:</p>
 </table>
 <br/>
 <br/>
-<a href="{{ path('evaluacion_grupo',{ 'ficha':aspirante.ficha, 'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}" class="button verde">
-        Continuar
+<a href="{{ path('evaluacion_grupo',{ 'ficha':aspirante.ficha, 'area':area,'seccion':seccion, 'tema':tema, 'grupo':grupo  })  }}" class="button">
+        Comenzar evaluación
 </a>
 </center>
-
+<br/>
 {% endblock %}

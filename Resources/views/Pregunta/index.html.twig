@@ -1,0 +1,60 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Listado de preguntas
+{% endblock %}
+
+{% block body %}
+<h1>Pregunta list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Sentencia</th>
+            <th>Objetivo</th>
+            <th>Imagen</th>
+           
+            <th>Opcion1</th>
+            <th>Opcion2</th>
+            <th>Opcion3</th>
+            <th>Opcion4</th>
+            <th>Respuesta</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for pregunta in preguntas %}
+        <tr>
+            <td><a href="{{ path('pregunta_show', { 'id': pregunta.id }) }}">{{ pregunta.id }}</a></td>
+            <td>{{ pregunta.sentencia }}</td>
+            <td>{{ pregunta.objetivo }}</td>
+            <td>{{ pregunta.imagen }}</td>
+            
+            <td>{{ pregunta.opcion1 }}</td>
+            <td>{{ pregunta.opcion2 }}</td>
+            <td>{{ pregunta.opcion3 }}</td>
+            <td>{{ pregunta.opcion4 }}</td>
+            <td>{{ pregunta.respuesta }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('pregunta_show', { 'id': pregunta.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('pregunta_edit', { 'id': pregunta.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('pregunta_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}

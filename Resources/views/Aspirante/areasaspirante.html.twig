@@ -41,6 +41,22 @@
         <td align="left" class="encabezadosNegro"> Calificacion Diagnostico:</td>
         <td align="center" class="datosNegro"  bgcolor="#E9EBE9"> {{aspirante.hoja.calificacionDiagnostico}}</td>
     </tr>
+
+   
+    </table>
+    <br/>
+    <table align="center" border='0'>
+    <tr>    
+        <td align="center" colspan="6" class="encabezadosNegro"> Promedios del Periodo</td>
+    </tr>
+     <tr>
+        <td align="left" class="datosNegro" > Calificación:</td>
+        <td align="center" class="datosNegro" bgcolor="#E9EBE9"> {{promedioCalificaccion}}</td>
+        <td align="left" class="encabezadosNegro"> Diagnostico: </td>
+        <td align="center" class="datosNegro" bgcolor="#E9EBE9">{{diagnosticoCalificaccion}}</td>
+        <td align="left" class="datosNegro" > Selección:</td>
+        <td align="center" class="datosNegro"  bgcolor="#E9EBE9">{{seleccionCalificaccion}}</td>
+    </tr>
     </table>
     <br/>
     <br/>
@@ -58,6 +74,9 @@
          <th bgcolor="#E9EBE9">
             <p align="center" class="encabezadosNegro">Calificación de Diagnóstico</p>
          </th>
+         <th bgcolor="#E9EBE9">
+            <p align="center" class="encabezadosNegro">Promedios del Periodo</p>
+         </th>
          {% for area in aspirante.hoja.areas %}
             <tr>
                 <td bgcolor="#E9EBE9">
@@ -72,9 +91,11 @@
                 <td>
                     <p align="center" class="datosNegro">{{area.calificaciondiagnostico}}</p>
                 </td>
+                <td>
+                    <p align="center" class="datosNegro">{{promediosAreas[area.area.nombre]}}</p>
+                </td>
             </tr>
          {% endfor %}
     </table>
-
 
 {% endblock %}

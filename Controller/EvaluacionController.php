@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Itsur\AeiBundle\Entity\HojaRespuestasFactory;
+use Itsur\AeiBundle\Entity\HojaRespuestas;
 use Itsur\AeiBundle\Entity\Utilerias;
 use Itsur\AeiBundle\Form\GrupoType;
 use Itsur\AeiBundle\Entity\PreguntaEvaluable;
@@ -128,9 +129,7 @@ class EvaluacionController extends Controller
              $session = $this->getRequest()->getSession();
              $session->start();
 
-             $manual = Utilerias::manualActual($this->getDoctrine());
-
-             $hoja = HojaRespuestasFactory::getHojaRespuestas($manual->getClave(), $this->getDoctrine());
+             $hoja = HojaRespuestasFactory::getHojaRespuestas($periodoActual, $this->getDoctrine());
              $hoja->setAplicador($aplicador);
              $hoja->setAspirante($aspirante);
              $hoja->setFecha( new \DateTime());
@@ -209,8 +208,9 @@ class EvaluacionController extends Controller
                         'seccion' =>$seccion,
                         'tema' =>$tema,
                         'grupo' =>$grupo,
-						'hoja' => $hoja,
-                    )
+						'hoja' =>$hoja,
+
+                        )                    
                 );
             }else{
                  return $this->render('ItsurAeiBundle:Evaluacion:gruponoencontrado.html.twig',
@@ -221,7 +221,7 @@ class EvaluacionController extends Controller
                         'seccion' =>$seccion,
                         'tema' =>$tema,
                         'grupo' =>$grupo,
-						'hoja' => $hoja,
+						'hoja' =>$hoja,
                     )
                 );
             }
@@ -293,7 +293,7 @@ class EvaluacionController extends Controller
        {
            $session->save();
            $aspirante = $session->set('aspirante',null);
-           return $this->redirect($this->generateUrl('evaluacion_identificacion'));
+           return $this->redirect($this->generateUrl('evaluacion_index'));
        }
        else
        {
@@ -321,10 +321,18 @@ class EvaluacionController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
+                $existeFicha = $em->getRepository('ItsurAeiBundle:Aspirante')->findByPeriodoAndFicha($periodoActual->getId(),  $aspirante->getId());
 
-                $em->persist($aspirante);
-                $em->flush();
-                return $this->redirect($this->generateUrl('evaluacion_identificacion'));
+                if($existeFicha){
+                   return $this->render('ItsurAeiBundle:Evaluacion:yaexisteficha.html.twig',array(
+                        'aspirante'=> $aspirante,
+                        'periodo'=>$periodoActual,
+                    ));
+                }else{
+                   $em->persist($aspirante);
+                   $em->flush();
+                   return $this->redirect($this->generateUrl('evaluacion_identificacion'));
+                }
             }
 
         }
@@ -530,7 +538,7 @@ class EvaluacionController extends Controller
             return $this->render('ItsurAeiBundle:Evaluacion:mostrarImagen.html.twig',
             array(
                 'desplegar'=>true,
-                'orientacion'=>'derecha',
+                'orientacion'=>'izquierda',
                 'imagen'=>$respuesta,
                 ));
         }

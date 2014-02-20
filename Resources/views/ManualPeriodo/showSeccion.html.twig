@@ -1,0 +1,26 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Mostrar Seccion del Periodo
+{% endblock %}
+
+{% block body %}
+   <h1>Información del Seccion</h1> 
+    <br/>
+    Area: {{seccionperiodo.seccion.area.nombre}}
+    <br/>
+    Nombre: {{seccionperiodo.seccion.nombre}}
+    <br/>
+    Puntaje: {{seccionperiodo.seccion.puntaje}}
+    <br/>
+    Intesión: {{seccionperiodo.seccion.intension}}
+    <br/>
+    <br/>
+    Temas
+    <br/>
+    <br/>
+    {% for tema in seccionperiodo.temas %}
+        <a href="{{ path('tema_periodo_show', {'tema':tema.id} ) }}"> {{tema.tema.nombre}} </a>
+        <br/>
+    {% endfor %}
+
+{% endblock %}

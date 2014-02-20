@@ -1,0 +1,36 @@
+{% extends 'ItsurAeiBundle::layout.html.twig' %}
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+   
+   <center>
+
+    <h1>Acceso</h1>
+
+    {% if error %}
+        <div class="error">{{ error.message }}</div>
+    {% endif %}
+
+    <form action="{{ path("_aei_security_check") }}" method="post" id="login" >
+        <table>
+        <tr>
+           <td align="right">    <label for="username" class="instrucciones">Usuario :</label> </td>
+               <td>  <input type="text" id="username" name="_username" value="{{ last_username }}"  />
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right"><label for="password" class="instrucciones">Contraseña :</label></td>
+            <td> <input type="password" id="password" name="_password" /> </td>
+        </tr>
+        <tr>
+            <td align="right" colspan="2">    <input type="submit"  value="Entrar" class="instrucciones" /></td>           
+        </tr>
+        </table>
+    
+    </form>
+
+</center>
+{% endblock %}
